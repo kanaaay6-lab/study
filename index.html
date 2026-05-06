@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KR Study 🐦‍⬛</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e1b4b;
+            --accent-purple: #a78bfa;
+            --text-main: #f8fafc;
+            --text-sub: #cbd5e1;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-user-select: none;
+        }
+
+        /* Header */
+        .header {
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-purple);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Mode Selector */
+        .mode-tabs {
+            display: flex;
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab.active {
+            background: var(--accent-purple);
+            color: var(--bg-color);
+            font-weight: bold;
+        }
+
+        /* Main Card */
+        .card {
+            width: 90%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .korean-text {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+
+        .japanese-text {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            min-height: 1.6em;
+            transition: 0.3s;
+        }
+
+        .hidden { opacity: 0; }
+
+        /* Controls */
+        .controls {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            background: #1e293b;
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-main { background: var(--accent-purple); color: var(--bg-color); }
+        .btn-sub { background: #334155; color: white; }
+
+        .btn-main:active, .btn-sub:active { transform: scale(0.98); opacity: 0.8; }
+
+        /* Counter */
+        .counter {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">🐦‍⬛ KR Listening Study</div>
+
+    <div class="mode-tabs">
+        <div class="tab active" onclick="setMode('flash')">予習 (Flash)</div>
+        <div class="tab" onclick="setMode('type')">本番 (Type)</div>
+    </div>
+
+    <div class="card" onclick="revealAnswer()">
+        <div id="display-kr" class="korean-text">???</div>
+        <div id="display-jp" class="japanese-text hidden">答え</div>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="answer-input" placeholder="日本語の意味を入力..." style="display: none;">
+        <button class="btn-main" id="main-action-btn" onclick="handleAction()">発音を聞く</button>
+        <button class="btn-sub" onclick="nextWord()">次の単語へ</button>
+    </div>
+
+    <div class="counter">残り: <span id="remain-count">0</span></div>
+
+    <script>
+        // データ構造（初期状態は空。LocalStorageから読み込む）
+        let words = JSON.parse(localStorage.getItem('kr_words')) || [];
+        let currentIndex = 0;
+        let currentMode = 'flash'; // 'flash' or 'type'
+
+        const synth = window.speechSynthesis;
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const input = document.getElementById('answer-input');
+            const btn = document.getElementById('main-action-btn');
+            
+            if (mode === 'type') {
+                input.style.display = 'block';
+                btn.innerText = '答え合わせ';
+                document.getElementById('display-jp').classList.add('hidden');
+            } else {
+                input.style.display = 'none';
+                btn.innerText = '発音を聞く';
+            }
+            nextWord();
+        }
+
+        function speak(text) {
+            if (synth.speaking) synth.cancel();
+            const uttr = new SpeechSynthesisUtterance(text);
+            uttr.lang = 'ko-KR';
+            uttr.rate = 0.8;
+            synth.speak(uttr);
+        }
+
+        function nextWord() {
+            if (words.length === 0) {
+                document.getElementById('display-kr').innerText = "単語を追加してね";
+                return;
+            }
+            currentIndex = Math.floor(Math.random() * words.length);
+            const word = words[currentIndex];
+            document.getElementById('display-kr').innerText = word.kr;
+            document.getElementById('display-jp').innerText = word.jp;
+            document.getElementById('display-jp').classList.add('hidden');
+            document.getElementById('answer-input').value = "";
+            document.getElementById('remain-count').innerText = words.length;
+            
+            if (currentMode === 'flash') speak(word.kr);
+        }
+
+        function revealAnswer() {
+            if (currentMode === 'flash') {
+                document.getElementById('display-jp').classList.remove('hidden');
+            }
+        }
+
+        function handleAction() {
+            const word = words[currentIndex];
+            if (currentMode === 'flash') {
+                speak(word.kr);
+            } else {
+                // タイピング判定
+                const userAns = document.getElementById('answer-input').value.trim();
+                if (userAns === word.jp) {
+                    alert("正解！天才！");
+                    nextWord();
+                } else {
+                    alert("おしい！ 答え: " + word.jp);
+                    document.getElementById('display-jp').classList.remove('hidden');
+                }
+            }
+        }
+
+        // 初期起動
+        nextWord();
+
+        // 単語追加用の関数（コンソールや設定画面から使用）
+        function addWords(newData) {
+            // 重複チェックロジックなど
+            words = [...words, ...newData];
+            localStorage.setItem('kr_words', JSON.stringify(words));
+            nextWord();
+        }
+    </script>
+</body>
+</html>
