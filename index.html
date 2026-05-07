@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KR Study 🐦‍⬛</title>
+    <style>
+        :root { --bg: #0f172a; --card: #1e1b4b; --purple: #a78bfa; --text: #f8fafc; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding-bottom: 50px; }
+        .header { padding: 20px; color: var(--purple); font-weight: bold; font-size: 1.2rem; }
+        .card { width: 90%; max-width: 400px; background: var(--card); border-radius: 24px; padding: 40px 20px; text-align: center; border: 1px solid rgba(167,139,250,0.2); min-height: 200px; display: flex; flex-direction: column; justify-content: center; }
+        .korean { font-size: 3rem; font-weight: bold; margin-bottom: 10px; }
+        .japanese { font-size: 1.5rem; color: var(--purple); min-height: 1.6em; transition: 0.3s; }
+        .hidden { opacity: 0; }
+        .controls { width: 90%; max-width: 400px; margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        input, textarea { padding: 15px; border-radius: 12px; border: none; background: #1e293b; color: white; text-align: center; font-size: 1rem; }
+        button { padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-main { background: var(--purple); color: var(--bg); }
+        .btn-sub { background: #334155; color: white; }
+        
+        /* 管理エリア（画面下部に配置） */
+        .admin-section { margin-top: 50px; width: 90%; max-width: 400px; border-top: 1px solid #334155; padding-top: 20px; }
+        .admin-title { font-size: 0.8rem; color: #64748b; margin-bottom: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="header">🐦‍⬛ KR Listening Study</div>
+
+    <div class="card" onclick="document.getElementById('jp').classList.remove('hidden')">
+        <div id="kr" class="korean">???</div>
+        <div id="jp" class="japanese hidden">答え</div>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="user-input" placeholder="意味を入力...">
+        <button class="btn-main" onclick="check()">答え合わせ / 発音</button>
+        <button class="btn-sub" onclick="next()">次の単語へ</button>
+    </div>
+
+    <div class="admin-section">
+        <div class="admin-title">【管理メニュー】単語の追加（形式：韓国語:日本語）</div>
+        <textarea id="new-words" rows="3" placeholder="안녕:こんにちは&#10;감사:ありがとう" style="width:100%; margin-bottom:10px;"></textarea>
+        <button class="btn-sub" style="width:100%;" onclick="saveWords()">データを保存する</button>
+        <button onclick="if(confirm('全消去しますか？')){localStorage.clear();location.reload();}" style="background:none; color:#ef4444; width:100%; margin-top:10px; font-size:0.7rem;">データをリセット</button>
+    </div>
+
+    <script>
+        let words = JSON.parse(localStorage.getItem('kr_data') || '[]');
+        let current = null;
+
+        function speak(t) {
+            const u = new SpeechSynthesisUtterance(t);
+            u.lang = 'ko-KR';
+            u.rate = 0.8;
+            speechSynthesis.speak(u);
+        }
+
+        function next() {
+            if(!words.length) { document.getElementById('kr').innerText="単語を追加してね"; return; }
+            current = words[Math.floor(Math.random()*words.length)];
+            document.getElementById('kr').innerText = current.kr;
+            document.getElementById('jp').innerText = current.jp;
+            document.getElementById('jp').classList.add('hidden');
+            document.getElementById('user-input').value = "";
+            speak(current.kr);
+        }
+
+        function check() {
+            if(!current) return;
+            const val = document.getElementById('user-input').value.trim();
+            if(val === current.jp) { alert("正解！天才！"); next(); } 
+            else { speak(current.kr); document.getElementById('jp').classList.remove('hidden'); }
+        }
+
+        function saveWords() {
+            const raw = document.getElementById('new-words').value;
+            const lines = raw.split('\n');
+            lines.forEach(line => {
+                const parts = line.split(':');
+                if(parts.length === 2) {
+                    words.push({ kr: parts[0].trim(), jp: parts[1].trim() });
+                }
+            });
+            localStorage.setItem('kr_data', JSON.stringify(words));
+            alert(lines.length + "件のデータを保存しました！");
+            document.getElementById('new-words').value = "";
+            next();
+        }
+
+        next();
+    </script>
+</body>
+</html>
