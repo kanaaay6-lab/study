@@ -1,1 +1,836 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🐦‍⬛ 韓国語暗記</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Noto+Sans+KR:wght@400;700&family=DM+Mono:wght@400;500&display=swap');
 
+:root {
+  --bg: #0d0b12;
+  --surface: #130f1e;
+  --card: #1a1528;
+  --card2: #201a30;
+  --border: #2e2545;
+  --purple: #7c3aed;
+  --purple-light: #a855f7;
+  --purple-dim: rgba(124,58,237,0.15);
+  --purple-glow: rgba(124,58,237,0.3);
+  --yellow: #ffd93d;
+  --yellow-dim: rgba(255,217,61,0.12);
+  --green: #4ade80;
+  --green-dim: rgba(74,222,128,0.1);
+  --red: #f87171;
+  --red-dim: rgba(248,113,113,0.1);
+  --text: #ede9f5;
+  --muted: #7768a0;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+/* ─── HEADER ─── */
+.header {
+  width: 100%;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-title {
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--purple-light);
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.mode-tab {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 7px 2px;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.mode-tab.active {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ─── SCREEN ─── */
+.screen { display: none; width: 100%; padding: 14px 16px; flex-direction: column; align-items: center; gap: 10px; }
+.screen.active { display: flex; }
+
+/* ─── CATEGORY ─── */
+.cat-wrap { display: flex; flex-wrap: wrap; gap: 5px; width: 100%; justify-content: center; }
+.cat-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.67rem;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: all 0.18s;
+}
+.cat-btn.active {
+  border-color: var(--purple-light);
+  color: var(--purple-light);
+  background: var(--purple-dim);
+}
+
+/* ─── SCORE ─── */
+.score-bar {
+  display: flex;
+  gap: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.76rem;
+  align-items: center;
+}
+.s-o { color: var(--green); }
+.s-x { color: var(--red); }
+.s-left { color: var(--muted); }
+
+.prog-wrap { width: 100%; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--purple-light)); border-radius: 2px; transition: width 0.4s ease; }
+
+/* ─── FLASHCARD ─── */
+.flip-wrap {
+  width: 100%;
+  perspective: 900px;
+  height: 190px;
+  cursor: pointer;
+}
+.flip-inner {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease;
+}
+.flip-inner.flipped { transform: rotateY(180deg); }
+
+.flip-face {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; padding: 20px;
+  overflow: hidden;
+}
+
+.flip-front {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.flip-back {
+  background: var(--card2);
+  border: 1px solid var(--purple);
+  box-shadow: 0 0 24px var(--purple-glow);
+  transform: rotateY(180deg);
+}
+
+/* カード内の韓国語 - サイズを固定 */
+.flip-korean-text {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--yellow);
+  text-align: center;
+  line-height: 1.3;
+  word-break: keep-all;
+  max-width: 100%;
+}
+
+.flip-meaning {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.flip-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.flip-korean-small {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.95rem;
+  color: var(--purple-light);
+  font-weight: 700;
+}
+
+/* ─── QUESTION CARD (クイズ) ─── */
+.q-card {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.q-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.q-korean {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--yellow);
+  text-align: center;
+  line-height: 1.3;
+  text-shadow: 0 0 20px rgba(255,217,61,0.25);
+}
+
+/* ─── SPEAK BUTTON ─── */
+.btn-speak {
+  background: var(--yellow-dim);
+  border: 1px solid var(--yellow);
+  color: var(--yellow);
+  padding: 7px 20px;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-speak:hover, .btn-speak.playing { background: rgba(255,217,61,0.22); }
+
+/* ─── BUTTONS ─── */
+.btn {
+  width: 100%;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 0.86rem;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--purple), var(--purple-light));
+  color: #fff;
+  box-shadow: 0 4px 15px var(--purple-glow);
+}
+
+.btn-secondary {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn-secondary:hover { border-color: var(--purple-light); color: var(--purple-light); }
+
+.btn-green {
+  background: var(--green-dim);
+  border: 1px solid var(--green);
+  color: var(--green);
+}
+
+.btn-red {
+  background: var(--red-dim);
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+.btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+.two-btn { display: flex; gap: 8px; width: 100%; }
+.two-btn .btn { flex: 1; }
+
+/* ─── INPUT ─── */
+.answer-input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  color: var(--text);
+  font-size: 1rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.answer-input:focus {
+  border-color: var(--purple-light);
+  box-shadow: 0 0 0 3px var(--purple-dim);
+}
+.answer-input.correct { border-color: var(--green); background: var(--green-dim); }
+.answer-input.wrong { border-color: var(--red); background: var(--red-dim); }
+
+/* ─── FEEDBACK ─── */
+.feedback {
+  width: 100%;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+.feedback.show { display: flex; }
+.feedback.correct { background: var(--green-dim); border: 1px solid var(--green); }
+.feedback.wrong { background: var(--red-dim); border: 1px solid var(--red); }
+.fb-title { font-size: 0.88rem; font-weight: 700; }
+.feedback.correct .fb-title { color: var(--green); }
+.feedback.wrong .fb-title { color: var(--red); }
+.fb-body { color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+
+/* ─── HINT ─── */
+.hint-row { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+.btn-hint { background: none; border: none; color: var(--muted); font-size: 0.68rem; cursor: pointer; font-family: 'Noto Sans JP', sans-serif; text-decoration: underline; }
+.hint-text { font-size: 0.72rem; color: var(--purple-light); }
+
+/* ─── RESULT ─── */
+.result-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 14px; text-align: center; width: 100%; padding-top: 16px;
+}
+.result-icon { font-size: 3rem; }
+.result-score {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.6rem;
+  color: var(--yellow);
+  text-shadow: 0 0 20px rgba(255,217,61,0.4);
+}
+.result-msg { color: var(--muted); font-size: 0.82rem; line-height: 1.7; }
+.result-review { color: var(--red); font-size: 0.78rem; }
+
+/* ─── REVIEW LIST ─── */
+.review-list { width: 100%; display: flex; flex-direction: column; gap: 7px; }
+.review-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--purple);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+.ri-korean { font-family: 'Noto Sans KR', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--yellow); }
+.ri-right { display: flex; flex-direction: column; gap: 2px; }
+.ri-meaning { font-size: 0.8rem; color: var(--text); }
+.ri-reading { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); }
+.ri-speak { background: none; border: none; color: var(--muted); font-size: 1rem; cursor: pointer; padding: 4px; }
+
+.section-title {
+  width: 100%;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ─── HOW TO ─── */
+.howto {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  font-size: 0.78rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.howto strong { color: var(--text); display: block; margin-top: 12px; margin-bottom: 2px; }
+.howto strong:first-child { margin-top: 0; }
+.howto code {
+  display: block;
+  background: #080610;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 10px 12px;
+  margin: 6px 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--yellow);
+  word-break: break-all;
+  line-height: 1.6;
+}
+
+.divider { width: 100%; height: 1px; background: var(--border); }
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 0;
+  font-size: 0.82rem;
+  line-height: 1.8;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">
+    <span>🐦‍⬛</span>
+    韓国語暗記
+    <span>🐦‍⬛</span>
+  </div>
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="switchMode('flash',this)">🃏<br>カード</button>
+    <button class="mode-tab" onclick="switchMode('quiz',this)">✏️<br>クイズ</button>
+    <button class="mode-tab" onclick="switchMode('review',this)">🔁<br>復習</button>
+    <button class="mode-tab" onclick="switchMode('howto',this)">➕<br>追加</button>
+  </div>
+</div>
+
+<!-- ════ FLASHCARD ════ -->
+<div class="screen active" id="screen-flash">
+  <div class="cat-wrap" id="flash-cats"></div>
+  <div class="score-bar">
+    <span class="s-o">⭕ <span id="f-o">0</span></span>
+    <span class="s-x">❌ <span id="f-x">0</span></span>
+    <span class="s-left">残り <span id="f-left">0</span></span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="f-prog" style="width:0%"></div></div>
+
+  <div id="f-game" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div class="flip-wrap" onclick="flashFlip()">
+      <div class="flip-inner" id="flip-inner">
+        <div class="flip-face flip-front">
+          <span class="q-label">タップでめくる</span>
+          <div class="flip-korean-text" id="f-korean">—</div>
+          <button class="btn-speak" onclick="event.stopPropagation();speakWord(currentFWord().k)">🔊 発音を聞く</button>
+        </div>
+        <div class="flip-face flip-back">
+          <div class="flip-meaning" id="f-meaning">—</div>
+          <div class="flip-sub" id="f-reading">—</div>
+          <div class="flip-korean-small" id="f-korean2">—</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="f-flip-btn" onclick="flashFlip()">答えを見る 👀</button>
+    <div class="two-btn" id="f-judge" style="display:none">
+      <button class="btn btn-red" onclick="flashJudge(false)">❌ わからなかった</button>
+      <button class="btn btn-green" onclick="flashJudge(true)">⭕ わかった！</button>
+    </div>
+  </div>
+
+  <div id="f-result" style="display:none;width:100%">
+    <div class="result-wrap">
+      <div class="result-icon" id="f-emoji">🐦‍⬛</div>
+      <div class="result-score" id="f-score-txt"></div>
+      <div class="result-msg" id="f-msg"></div>
+      <div class="result-review" id="f-rn"></div>
+      <button class="btn btn-secondary" style="margin-top:6px" onclick="flashRestart()">もう一度 🔄</button>
+      <button class="btn btn-red" id="f-to-review" style="display:none" onclick="goReview()">❌ 間違えた単語を復習する</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ QUIZ ════ -->
+<div class="screen" id="screen-quiz">
+  <div class="cat-wrap" id="quiz-cats"></div>
+  <div class="score-bar">
+    <span class="s-o">⭕ <span id="q-o">0</span></span>
+    <span class="s-x">❌ <span id="q-x">0</span></span>
+    <span class="s-left">残り <span id="q-left">0</span></span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="q-prog" style="width:0%"></div></div>
+
+  <div id="q-game" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div class="q-card">
+      <span class="q-label">この単語の意味は？</span>
+      <div class="q-korean" id="q-korean">—</div>
+      <button class="btn-speak" onclick="speakWord(currentQWord().k)">🔊 発音を聞く</button>
+    </div>
+    <div class="hint-row">
+      <button class="btn-hint" onclick="showHint()">ヒントを見る</button>
+      <span class="hint-text" id="q-hint"></span>
+    </div>
+    <input class="answer-input" id="q-input" type="text" placeholder="日本語で入力… (Enterで確認)" autocomplete="off" />
+    <button class="btn btn-primary" id="q-check" onclick="quizCheck()">答え合わせ ✓</button>
+    <div class="feedback" id="q-fb">
+      <div class="fb-title" id="q-fb-t"></div>
+      <div class="fb-body" id="q-fb-b"></div>
+    </div>
+    <button class="btn btn-secondary" id="q-next" style="display:none" onclick="quizNext()">次の問題 →</button>
+  </div>
+
+  <div id="q-result" style="display:none;width:100%">
+    <div class="result-wrap">
+      <div class="result-icon" id="q-emoji">🐦‍⬛</div>
+      <div class="result-score" id="q-score-txt"></div>
+      <div class="result-msg" id="q-msg"></div>
+      <div class="result-review" id="q-rn"></div>
+      <button class="btn btn-secondary" style="margin-top:6px" onclick="quizRestart()">もう一度 🔄</button>
+      <button class="btn btn-red" id="q-to-review" style="display:none" onclick="goReview()">❌ 間違えた単語を復習する</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ REVIEW ════ -->
+<div class="screen" id="screen-review">
+  <div class="empty-state" id="rv-empty">
+    🐦‍⬛<br>まだ間違えた単語はありません<br>クイズやカードをやってみよう！
+  </div>
+  <div id="rv-content" style="display:none;width:100%;flex-direction:column;gap:10px">
+    <div class="section-title">❌ 間違えた単語リスト</div>
+    <div class="review-list" id="rv-list"></div>
+    <div class="divider"></div>
+    <button class="btn btn-secondary" onclick="clearWrong()">リストをリセット 🗑️</button>
+  </div>
+</div>
+
+<!-- ════ HOW TO ════ -->
+<div class="screen" id="screen-howto">
+  <div class="section-title">単語の追加方法</div>
+  <div class="howto">
+    <strong>① ChatGPTにこの形式で出力してもらう</strong>
+    <code>{k:'단어', r:'タノ', m:'意味', cat:'カテゴリ'},</code>
+    カテゴリは以下から選ぶ：
+    <code>verbs / connectors / emotion / slang / streaming / other</code>
+
+    <strong>② gist.github.com でファイルを編集</strong>
+    GistにアクセスしてHTMLファイルを開く
+
+    <strong>③ 鉛筆マーク（Edit）をタップ</strong>
+
+    <strong>④ 追加する場所を検索</strong>
+    <code>// ★ここに単語を追加★</code>
+
+    <strong>⑤ その下に1行コピペして保存</strong>
+    <code>{k:'있다', r:'イッタ', m:'ある', cat:'verbs'},</code>
+
+    <strong>⑥ Safariで再読み込み → 完了！</strong>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════
+// ★ここに単語を追加★
+// ══════════════════════════════
+const ALL_WORDS = [
+  {k:'있다',r:'イッタ',m:'ある・いる',cat:'verbs'},
+  {k:'없다',r:'オプタ',m:'ない',cat:'verbs'},
+  {k:'하다',r:'ハダ',m:'する',cat:'verbs'},
+  {k:'보다',r:'ポダ',m:'見る',cat:'verbs'},
+  {k:'가다',r:'カダ',m:'行く',cat:'verbs'},
+  {k:'오다',r:'オダ',m:'来る',cat:'verbs'},
+  {k:'되다',r:'テダ',m:'なる',cat:'verbs'},
+  {k:'나아지다',r:'ナアジダ',m:'良くなる',cat:'verbs'},
+  {k:'사라지다',r:'サラジダ',m:'消える',cat:'verbs'},
+  {k:'좋아하다',r:'チョアハダ',m:'好き',cat:'verbs'},
+  {k:'쉬다',r:'シュイダ',m:'休む',cat:'verbs'},
+  {k:'열다',r:'ヨルダ',m:'開ける',cat:'verbs'},
+  {k:'만들다',r:'マンドゥルダ',m:'作る',cat:'verbs'},
+  {k:'받다',r:'パッタ',m:'もらう・受ける',cat:'verbs'},
+  {k:'그냥',r:'クニャン',m:'ただ・普通に',cat:'connectors'},
+  {k:'약간',r:'ヤッカン',m:'ちょっと・なんか',cat:'connectors'},
+  {k:'어차피',r:'オッチャッピ',m:'どうせ',cat:'connectors'},
+  {k:'그러니까',r:'クロニカ',m:'だから',cat:'connectors'},
+  {k:'물론',r:'ムルロン',m:'もちろん',cat:'connectors'},
+  {k:'이제',r:'イジェ',m:'もう・今や',cat:'connectors'},
+  {k:'차라리',r:'チャラリ',m:'いっそ・むしろ',cat:'connectors'},
+  {k:'근데',r:'クンデ',m:'でも',cat:'connectors'},
+  {k:'그래서',r:'クレソ',m:'それで',cat:'connectors'},
+  {k:'일단',r:'イルタン',m:'とりあえず',cat:'connectors'},
+  {k:'아니면',r:'アニミョン',m:'じゃなければ',cat:'connectors'},
+  {k:'뭐',r:'ムォ',m:'まあ・何（口語）',cat:'connectors'},
+  {k:'맞아',r:'マジャ',m:'そう・合ってる',cat:'emotion'},
+  {k:'고마워',r:'コマウォ',m:'ありがとう',cat:'emotion'},
+  {k:'미안해',r:'ミアネ',m:'ごめん',cat:'emotion'},
+  {k:'괜찮다',r:'ケンチャンタ',m:'大丈夫',cat:'emotion'},
+  {k:'불쌍하다',r:'プルサンハダ',m:'かわいそう',cat:'emotion'},
+  {k:'이상하다',r:'イサンハダ',m:'おかしい・変',cat:'emotion'},
+  {k:'놀라다',r:'ノルラダ',m:'驚く',cat:'emotion'},
+  {k:'질리다',r:'チルリダ',m:'飽きる',cat:'emotion'},
+  {k:'완벽하다',r:'ワンビョッカダ',m:'完璧だ',cat:'emotion'},
+  {k:'미쳤다',r:'ミチョッタ',m:'やばい（褒め）',cat:'slang'},
+  {k:'각미쳤다',r:'カンミチョッタ',m:'めちゃやばい',cat:'slang'},
+  {k:'진짜',r:'チンチャ',m:'まじで',cat:'slang'},
+  {k:'쉽게 보다',r:'スィプケ ポダ',m:'なめる・甘く見る',cat:'slang'},
+  {k:'느낌',r:'ヌッキム',m:'感じ・フィーリング',cat:'slang'},
+  {k:'공쥐',r:'コンジュ',m:'お姫ちゃま',cat:'slang'},
+  {k:'방송',r:'パンソン',m:'配信・放送',cat:'streaming'},
+  {k:'알림',r:'アルリム',m:'通知',cat:'streaming'},
+  {k:'끝나다',r:'クンナダ',m:'終わる',cat:'streaming'},
+  {k:'유튜브',r:'ユトゥブ',m:'YouTube',cat:'streaming'},
+  {k:'풀바',r:'プルバ',m:'フルバー・全力',cat:'streaming'},
+  {k:'설정',r:'ソルチョン',m:'設定・キャラ設定',cat:'streaming'},
+  {k:'여러분',r:'ヨロブン',m:'みなさん',cat:'other'},
+  {k:'동생',r:'トンセン',m:'弟・妹',cat:'other'},
+  {k:'사람들',r:'サラムドゥル',m:'人たち',cat:'other'},
+  {k:'토끼',r:'トッキ',m:'ウサギ',cat:'other'},
+  {k:'공주',r:'コンジュ',m:'お姫様',cat:'other'},
+  {k:'정말',r:'チョンマル',m:'本当に',cat:'other'},
+  {k:'같이',r:'カッチ',m:'一緒に',cat:'other'},
+  {k:'조금',r:'チョグム',m:'少し',cat:'other'},
+  {k:'내일',r:'ネイル',m:'明日',cat:'other'},
+  {k:'지금',r:'チグム',m:'今',cat:'other'},
+  {k:'아직',r:'アジク',m:'まだ',cat:'other'},
+];
+// ══════════════════════════════
+
+const CATS=['all','verbs','connectors','emotion','slang','streaming','other'];
+const CAT_JP={all:'全部',verbs:'動詞',connectors:'つなぎ',emotion:'感情',slang:'スラング',streaming:'配信系',other:'その他'};
+let wrongWords=[];
+
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function norm(s){return s.trim().replace(/[・。、！？\s]/g,'').toLowerCase();}
+function speakWord(t){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang='ko-KR';u.rate=0.85;
+  window.speechSynthesis.speak(u);
+}
+function addWrong(w){if(!wrongWords.find(x=>x.k===w.k))wrongWords.push(w);}
+function calcResult(o,total){
+  const p=Math.round((o/total)*100);
+  let icon='😢',msg='まだまだこれから！毎日少し聞こう 🎧';
+  if(p>=90){icon='🔥';msg='완벽해！ほぼ完璧です！';}
+  else if(p>=70){icon='🎉';msg='잘했어！いい調子！';}
+  else if(p>=50){icon='👍';msg='절반 이상！半分以上わかった！';}
+  return{icon,msg};
+}
+function buildCats(id,fn){
+  const w=document.getElementById(id);w.innerHTML='';
+  CATS.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='cat-btn'+(c==='all'?' active':'');
+    b.textContent=CAT_JP[c];
+    b.onclick=()=>{w.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');fn(c);};
+    w.appendChild(b);
+  });
+}
+function switchMode(mode,btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.mode-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('screen-'+mode).classList.add('active');
+  btn.classList.add('active');
+  if(mode==='review')renderReview();
+}
+
+// ══ FLASHCARD ══
+let fDeck=[],fIdx=0,fO=0,fX=0,fCat='all',fFlipped=false;
+function currentFWord(){return fDeck[fIdx]||{k:'',r:'',m:'',cat:''};}
+
+function flashInit(){
+  buildCats('flash-cats',c=>{fCat=c;flashRestart();});
+  flashRestart();
+}
+function flashRestart(){
+  fO=0;fX=0;fIdx=0;fFlipped=false;
+  fDeck=shuffle(fCat==='all'?ALL_WORDS:ALL_WORDS.filter(w=>w.cat===fCat));
+  document.getElementById('f-result').style.display='none';
+  document.getElementById('f-game').style.display='flex';
+  fUpdate();fShowCard();
+}
+function fShowCard(){
+  fFlipped=false;
+  const w=currentFWord();
+  document.getElementById('f-korean').textContent=w.k;
+  document.getElementById('f-meaning').textContent=w.m;
+  document.getElementById('f-reading').textContent=w.r;
+  document.getElementById('f-korean2').textContent=w.k;
+  document.getElementById('flip-inner').classList.remove('flipped');
+  document.getElementById('f-flip-btn').style.display='block';
+  document.getElementById('f-judge').style.display='none';
+  setTimeout(()=>speakWord(w.k),350);
+}
+function flashFlip(){
+  if(fFlipped)return;
+  fFlipped=true;
+  document.getElementById('flip-inner').classList.add('flipped');
+  document.getElementById('f-flip-btn').style.display='none';
+  document.getElementById('f-judge').style.display='flex';
+}
+function flashJudge(ok){
+  if(!ok)addWrong(currentFWord());
+  if(ok)fO++;else fX++;
+  fIdx++;fUpdate();
+  if(fIdx>=fDeck.length)fShowResult();
+  else fShowCard();
+}
+function fUpdate(){
+  document.getElementById('f-o').textContent=fO;
+  document.getElementById('f-x').textContent=fX;
+  document.getElementById('f-left').textContent=Math.max(0,fDeck.length-fIdx);
+  document.getElementById('f-prog').style.width=(fDeck.length>0?(fIdx/fDeck.length*100):0)+'%';
+}
+function fShowResult(){
+  document.getElementById('f-game').style.display='none';
+  document.getElementById('f-result').style.display='block';
+  const{icon,msg}=calcResult(fO,fDeck.length);
+  document.getElementById('f-emoji').textContent=icon;
+  document.getElementById('f-score-txt').textContent=fO+' / '+fDeck.length;
+  document.getElementById('f-msg').textContent=msg;
+  document.getElementById('f-rn').textContent=wrongWords.length>0?'❌ 間違えた単語：'+wrongWords.length+'個':'';
+  document.getElementById('f-to-review').style.display=wrongWords.length>0?'block':'none';
+}
+
+// ══ QUIZ ══
+let qDeck=[],qIdx=0,qO=0,qX=0,qCat='all',qChecked=false;
+function currentQWord(){return qDeck[qIdx]||{k:'',r:'',m:'',cat:''};}
+
+function quizInit(){
+  buildCats('quiz-cats',c=>{qCat=c;quizRestart();});
+  quizRestart();
+  document.getElementById('q-input').addEventListener('keydown',e=>{
+    if(e.key==='Enter'){if(!qChecked)quizCheck();else quizNext();}
+  });
+}
+function quizRestart(){
+  qO=0;qX=0;qIdx=0;qChecked=false;
+  qDeck=shuffle(qCat==='all'?ALL_WORDS:ALL_WORDS.filter(w=>w.cat===qCat));
+  document.getElementById('q-result').style.display='none';
+  document.getElementById('q-game').style.display='flex';
+  qUpdate();qShowCard();
+}
+function qShowCard(){
+  qChecked=false;
+  const w=currentQWord();
+  document.getElementById('q-korean').textContent=w.k;
+  document.getElementById('q-hint').textContent='';
+  const inp=document.getElementById('q-input');
+  inp.value='';inp.className='answer-input';inp.disabled=false;
+  document.getElementById('q-check').disabled=false;
+  document.getElementById('q-check').style.display='block';
+  document.getElementById('q-next').style.display='none';
+  document.getElementById('q-fb').className='feedback';
+  document.getElementById('q-fb-t').textContent='';
+  document.getElementById('q-fb-b').textContent='';
+  setTimeout(()=>speakWord(w.k),350);
+  inp.focus();
+}
+function showHint(){
+  const w=currentQWord();
+  document.getElementById('q-hint').textContent='💡 '+w.m[0]+'…（'+w.m.length+'文字）';
+}
+function quizCheck(){
+  if(qChecked)return;
+  qChecked=true;
+  const w=currentQWord();
+  const inp=document.getElementById('q-input');
+  const ua=norm(inp.value);
+  const kws=w.m.split(/[・\s]/).map(s=>norm(s)).filter(Boolean);
+  const ok=ua.length>0&&(kws.some(kw=>kw&&ua.includes(kw))||norm(w.m).includes(ua));
+  inp.disabled=true;
+  document.getElementById('q-check').disabled=true;
+  if(ok){
+    qO++;inp.classList.add('correct');
+    document.getElementById('q-fb').className='feedback correct show';
+    document.getElementById('q-fb-t').textContent='⭕ 正解！';
+    document.getElementById('q-fb-b').textContent='正解：'+w.m+'　（'+w.k+' ／ '+w.r+'）';
+  }else{
+    qX++;addWrong(w);inp.classList.add('wrong');
+    document.getElementById('q-fb').className='feedback wrong show';
+    document.getElementById('q-fb-t').textContent='❌ 不正解';
+    document.getElementById('q-fb-b').textContent='正解：'+w.m+'　（'+w.k+' ／ '+w.r+'）';
+  }
+  qUpdate();
+  document.getElementById('q-next').style.display='block';
+}
+function quizNext(){
+  qIdx++;
+  if(qIdx>=qDeck.length)qShowResult();
+  else qShowCard();
+}
+function qUpdate(){
+  document.getElementById('q-o').textContent=qO;
+  document.getElementById('q-x').textContent=qX;
+  document.getElementById('q-left').textContent=Math.max(0,qDeck.length-qIdx);
+  document.getElementById('q-prog').style.width=(qDeck.length>0?(qIdx/qDeck.length*100):0)+'%';
+}
+function qShowResult(){
+  document.getElementById('q-game').style.display='none';
+  document.getElementById('q-result').style.display='block';
+  const{icon,msg}=calcResult(qO,qDeck.length);
+  document.getElementById('q-emoji').textContent=icon;
+  document.getElementById('q-score-txt').textContent=qO+' / '+qDeck.length;
+  document.getElementById('q-msg').textContent=msg;
+  document.getElementById('q-rn').textContent=wrongWords.length>0?'❌ 間違えた単語：'+wrongWords.length+'個':'';
+  document.getElementById('q-to-review').style.display=wrongWords.length>0?'block':'none';
+}
+
+// ══ REVIEW ══
+function renderReview(){
+  const el=document.getElementById('rv-empty');
+  const ct=document.getElementById('rv-content');
+  const ls=document.getElementById('rv-list');
+  if(wrongWords.length===0){
+    el.style.display='block';ct.style.display='none';return;
+  }
+  el.style.display='none';ct.style.display='flex';
+  ls.innerHTML='';
+  wrongWords.forEach(w=>{
+    const d=document.createElement('div');
+    d.className='review-item';
+    d.innerHTML='<div class="ri-korean">'+w.k+'</div>'+
+      '<div class="ri-right"><div class="ri-meaning">'+w.m+'</div><div class="ri-reading">'+w.r+'</div></div>'+
+      '<button class="ri-speak" onclick="speakWord(\''+w.k+'\')">🔊</button>';
+    ls.appendChild(d);
+  });
+}
+function clearWrong(){wrongWords=[];renderReview();}
+function goReview(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.mode-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('screen-review').classList.add('active');
+  document.querySelectorAll('.mode-tab')[2].classList.add('active');
+  renderReview();
+}
+
+document.addEventListener('DOMContentLoaded',()=>{flashInit();quizInit();});
+</script>
+</body>
+</html>
