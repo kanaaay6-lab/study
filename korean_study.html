@@ -427,7 +427,6 @@ body {
   <div class="mode-tabs">
     <button class="mode-tab active" onclick="switchMode('flash',this)">🃏<br>カード</button>
     <button class="mode-tab" onclick="switchMode('quiz',this)">✏️<br>クイズ</button>
-    <button class="mode-tab" onclick="switchMode('review',this)">🔁<br>復習</button>
     <button class="mode-tab" onclick="switchMode('howto',this)">➕<br>追加</button>
   </div>
 </div>
@@ -471,7 +470,8 @@ body {
       <div class="result-msg" id="f-msg"></div>
       <div class="result-review" id="f-rn"></div>
       <button class="btn btn-secondary" style="margin-top:6px" onclick="flashRestart()">もう一度 🔄</button>
-      <button class="btn btn-red" id="f-to-review" style="display:none" onclick="goReview()">❌ 間違えた単語を復習する</button>
+      <button class="btn btn-red" id="f-to-review" style="display:none" onclick="flashRetryWrong()">❌ 間違えた単語をカードで復習</button>
+      <button class="btn btn-primary" id="f-to-quiz-wrong" style="display:none" onclick="quizRetryWrong()">✏️ 間違えた単語をクイズで復習</button>
     </div>
   </div>
 </div>
@@ -512,21 +512,9 @@ body {
       <div class="result-msg" id="q-msg"></div>
       <div class="result-review" id="q-rn"></div>
       <button class="btn btn-secondary" style="margin-top:6px" onclick="quizRestart()">もう一度 🔄</button>
-      <button class="btn btn-red" id="q-to-review" style="display:none" onclick="goReview()">❌ 間違えた単語を復習する</button>
+      <button class="btn btn-red" id="q-to-review" style="display:none" onclick="quizRetryWrong()">❌ 間違えた単語をクイズで復習</button>
+      <button class="btn btn-primary" id="q-to-flash-wrong" style="display:none" onclick="flashRetryWrong()">🃏 間違えた単語をカードで復習</button>
     </div>
-  </div>
-</div>
-
-<!-- ════ REVIEW ════ -->
-<div class="screen" id="screen-review">
-  <div class="empty-state" id="rv-empty">
-    🐦‍⬛<br>まだ間違えた単語はありません<br>クイズやカードをやってみよう！
-  </div>
-  <div id="rv-content" style="display:none;width:100%;flex-direction:column;gap:10px">
-    <div class="section-title">❌ 間違えた単語リスト</div>
-    <div class="review-list" id="rv-list"></div>
-    <div class="divider"></div>
-    <button class="btn btn-secondary" onclick="clearWrong()">リストをリセット 🗑️</button>
   </div>
 </div>
 
@@ -559,14 +547,6 @@ body {
 // ★ここに単語を追加★
 // ══════════════════════════════
 const ALL_WORDS = [
-  {k:'기어나다', r:'キオナダ', m:'這い出る', cat:'verbs'},
-　{k:'소리', r:'ソリ', m:'音', cat:'other'},
-{k:'한도', r:'ハンド', m:'限度・制限', cat:'other'},
-{k:'맞추다', r:'マッチュダ', m:'合わせる', cat:'verbs'},
-{k:'버섯', r:'ポソッ', m:'キノコ', cat:'other'},
-{k:'찾다', r:'チャッタ', m:'探す', cat:'verbs'},
-{k:'머리', r:'モリ', m:'頭', cat:'other'},
-{k:'사발', r:'サバル', m:'お椀', cat:'other'},
   {k:'있다',r:'イッタ',m:'ある・いる',cat:'verbs'},
   {k:'없다',r:'オプタ',m:'ない',cat:'verbs'},
   {k:'하다',r:'ハダ',m:'する',cat:'verbs'},
@@ -625,8 +605,6 @@ const ALL_WORDS = [
   {k:'내일',r:'ネイル',m:'明日',cat:'other'},
   {k:'지금',r:'チグム',m:'今',cat:'other'},
   {k:'아직',r:'アジク',m:'まだ',cat:'other'},
-
-  
 ];
 // ══════════════════════════════
 
@@ -667,7 +645,6 @@ function switchMode(mode,btn){
   document.querySelectorAll('.mode-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('screen-'+mode).classList.add('active');
   btn.classList.add('active');
-  if(mode==='review')renderReview();
 }
 
 // ══ FLASHCARD ══
@@ -725,7 +702,9 @@ function fShowResult(){
   document.getElementById('f-score-txt').textContent=fO+' / '+fDeck.length;
   document.getElementById('f-msg').textContent=msg;
   document.getElementById('f-rn').textContent=wrongWords.length>0?'❌ 間違えた単語：'+wrongWords.length+'個':'';
-  document.getElementById('f-to-review').style.display=wrongWords.length>0?'block':'none';
+  const hasWrong=wrongWords.length>0;
+  document.getElementById('f-to-review').style.display=hasWrong?'block':'none';
+  document.getElementById('f-to-quiz-wrong').style.display=hasWrong?'block':'none';
 }
 
 // ══ QUIZ ══
@@ -809,35 +788,42 @@ function qShowResult(){
   document.getElementById('q-score-txt').textContent=qO+' / '+qDeck.length;
   document.getElementById('q-msg').textContent=msg;
   document.getElementById('q-rn').textContent=wrongWords.length>0?'❌ 間違えた単語：'+wrongWords.length+'個':'';
-  document.getElementById('q-to-review').style.display=wrongWords.length>0?'block':'none';
+  const hasWrong=wrongWords.length>0;
+  document.getElementById('q-to-review').style.display=hasWrong?'block':'none';
+  document.getElementById('q-to-flash-wrong').style.display=hasWrong?'block':'none';
 }
 
-// ══ REVIEW ══
-function renderReview(){
-  const el=document.getElementById('rv-empty');
-  const ct=document.getElementById('rv-content');
-  const ls=document.getElementById('rv-list');
-  if(wrongWords.length===0){
-    el.style.display='block';ct.style.display='none';return;
-  }
-  el.style.display='none';ct.style.display='flex';
-  ls.innerHTML='';
-  wrongWords.forEach(w=>{
-    const d=document.createElement('div');
-    d.className='review-item';
-    d.innerHTML='<div class="ri-korean">'+w.k+'</div>'+
-      '<div class="ri-right"><div class="ri-meaning">'+w.m+'</div><div class="ri-reading">'+w.r+'</div></div>'+
-      '<button class="ri-speak" onclick="speakWord(\''+w.k+'\')">🔊</button>';
-    ls.appendChild(d);
-  });
-}
-function clearWrong(){wrongWords=[];renderReview();}
-function goReview(){
+// ══ RETRY WRONG ══
+function flashRetryWrong(){
+  if(wrongWords.length===0)return;
+  // カード画面に切り替えて間違えた単語だけでスタート
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.mode-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('screen-review').classList.add('active');
-  document.querySelectorAll('.mode-tab')[2].classList.add('active');
-  renderReview();
+  document.getElementById('screen-flash').classList.add('active');
+  document.querySelectorAll('.mode-tab')[0].classList.add('active');
+  const retryDeck=shuffle([...wrongWords]);
+  wrongWords=[];
+  fO=0;fX=0;fIdx=0;fFlipped=false;
+  fDeck=retryDeck;
+  document.getElementById('f-result').style.display='none';
+  document.getElementById('f-game').style.display='flex';
+  fUpdate();fShowCard();
+}
+
+function quizRetryWrong(){
+  if(wrongWords.length===0)return;
+  // クイズ画面に切り替えて間違えた単語だけでスタート
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.mode-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('screen-quiz').classList.add('active');
+  document.querySelectorAll('.mode-tab')[1].classList.add('active');
+  const retryDeck=shuffle([...wrongWords]);
+  wrongWords=[];
+  qO=0;qX=0;qIdx=0;qChecked=false;
+  qDeck=retryDeck;
+  document.getElementById('q-result').style.display='none';
+  document.getElementById('q-game').style.display='flex';
+  qUpdate();qShowCard();
 }
 
 document.addEventListener('DOMContentLoaded',()=>{flashInit();quizInit();});
