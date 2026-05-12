@@ -250,6 +250,35 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 // ★単語ここに追加★
 // ══════════════════════
 const ALL_WORDS = [
+  txt {k:‘먹고 살다’, r:‘モッコ サルダ’, m:‘食べて生きる・食っていく’, cat:‘verbs’, emotion:‘chatting’},
+
+txt {k:‘작업하다’, r:‘チャゴパダ’, m:‘作業する・制作する’, cat:‘streaming’, emotion:‘streaming’},
+
+txt {k:‘들어오다’, r:‘トゥロオダ’, m:‘入ってくる・配信に来る’, cat:‘streaming’, emotion:‘chatting’},
+
+txt {k:‘조회수’, r:‘チョフェス’, m:‘再生数’, cat:‘streaming’, emotion:‘streaming’},
+
+txt {k:‘편집’, r:‘ピョンジプ’, m:‘編集’, cat:‘streaming’, emotion:‘streaming’},
+
+txt {k:‘영상’, r:‘ヨンサン’, m:‘映像・動画’, cat:‘streaming’, emotion:‘streaming’},
+
+txt {k:‘빵 터지다’, r:‘パン トジダ’, m:‘爆笑する’, cat:‘slang’, emotion:‘reaction’},
+
+txt {k:‘굳이’, r:‘クッチ’, m:‘わざわざ’, cat:‘connectors’, emotion:‘chatting’},
+
+txt {k:‘잘하다’, r:‘チャラダ’, m:‘上手い・得意だ’, cat:‘verbs’, emotion:‘positive’},
+
+txt {k:‘신경 쓰다’, r:‘シンギョン スダ’, m:‘気にする’, cat:‘emotion’, emotion:‘negative’},
+
+txt {k:‘눈물’, r:‘ヌンムル’, m:‘涙’, cat:‘emotion’, emotion:‘reaction’},
+
+txt {k:‘한마디’, r:‘ハンマディ’, m:‘一言’, cat:‘other’, emotion:‘chatting’},
+
+txt {k:‘못 하다’, r:‘モタダ’, m:‘できない’, cat:‘verbs’, emotion:‘negative’},
+
+txt {k:‘진짜’, r:‘チンチャ’, m:‘マジで・本当に’, cat:‘reaction’, emotion:‘reaction’},
+
+txt {k:‘요즘’, r:‘ヨジュム’, m:‘最近’, cat:‘other’, emotion:‘chatting’},
   {k:'훨씬',r:'ホルッシン',m:'はるかに',cat:'connectors',emotion:'chatting'},
   {k:'괜찮다',r:'ケンチャンタ',m:'大丈夫・良い',cat:'emotion',emotion:'positive'},
   {k:'괜찮아졌다',r:'ケンチャナジョッタ',m:'良くなった',cat:'emotion',emotion:'positive'},
@@ -337,6 +366,140 @@ const ALL_WORDS = [
 // ★フレーズここに追加★
 // ══════════════════════
 const ALL_PHRASES = [
+  {
+k:‘먹고 살아야지’,
+r:‘モッコ サラヤジ’,
+m:‘食っていかなきゃね’,
+scene:‘雑談・運営ネタ’,
+emotion:‘chatting’,
+freq:‘🔥’
+},
+
+{
+k:‘더 열심히 작업합니다’,
+r:‘ト ヨルシミ チャゴッカムニダ’,
+m:‘もっと頑張って作業します’,
+scene:‘制作・VTuber準備’,
+emotion:‘streaming’,
+freq:‘👍’
+},
+
+{
+k:‘많이 자주 들어와 주세요’,
+r:‘マニ チャジュ トゥロワ ジュセヨ’,
+m:‘たくさん遊びに来てください’,
+scene:‘配信締め・宣伝’,
+emotion:‘streaming’,
+freq:‘🔥’
+},
+
+{
+k:‘채팅도 똑같이’,
+r:‘チェティンド トッカチ’,
+m:‘チャットも同じように’,
+scene:‘コメント反応’,
+emotion:‘chatting’,
+freq:‘👍’
+},
+
+{
+k:‘조회수가 증가하고’,
+r:‘チョフェスガ チュンガハゴ’,
+m:‘再生数が増えてて’,
+scene:‘動画・配信分析’,
+emotion:‘streaming’,
+freq:‘👍’
+},
+
+{
+k:‘편집 영상’,
+r:‘ピョンジプ ヨンサン’,
+m:‘編集映像’,
+scene:‘ショーツ・切り抜き’,
+emotion:‘streaming’,
+freq:‘🔥’
+},
+
+{
+k:‘빵 터지니까’,
+r:‘パン トジニカ’,
+m:‘爆笑しちゃって’,
+scene:‘笑いリアクション’,
+emotion:‘reaction’,
+freq:‘🔥’
+},
+
+{
+k:‘이런 거 굳이?’,
+r:‘イロンゴ クッチ?’,
+m:‘これわざわざ必要？’,
+scene:‘ツッコミ’,
+emotion:‘reaction’,
+freq:‘🔥’
+},
+
+{
+k:‘잘하는 것만’,
+r:‘チャラヌン ゴンマン’,
+m:‘得意なやつだけ’,
+scene:‘ゲーム・自己評価’,
+emotion:‘chatting’,
+freq:‘👍’
+},
+
+{
+k:‘신경 써서 미안’,
+r:‘シンギョン ソソ ミアン’,
+m:‘気にしすぎてごめん’,
+scene:‘謝罪・気遣い’,
+emotion:‘negative’,
+freq:‘👍’
+},
+
+{
+k:‘어떡해서 눈물…’,
+r:‘オットケソ ヌンムル’,
+m:‘どうしよう、涙…’,
+scene:‘感動・泣き’,
+emotion:‘reaction’,
+freq:‘👍’
+},
+
+{
+k:‘한마디 들으면’,
+r:‘ハンマディ トゥルミョン’,
+m:‘一言聞くと’,
+scene:‘雑談・感想’,
+emotion:‘chatting’,
+freq:‘👍’
+},
+
+{
+k:‘이거는 못 하니까’,
+r:‘イゴヌン モタニカ’,
+m:‘これはできないから’,
+scene:‘説明・言い訳’,
+emotion:‘chatting’,
+freq:‘🔥’
+},
+
+{
+k:‘진짜 지금’,
+r:‘チンチャ チグム’,
+m:‘マジで今’,
+scene:‘強調・リアクション’,
+emotion:‘reaction’,
+freq:‘🔥’
+},
+
+{
+k:‘이게 요즘에’,
+r:‘イゲ ヨジュメ’,
+m:‘これ最近さ〜’,
+scene:‘雑談導入’,
+emotion:‘chatting’,
+freq:‘🔥’
+}
   {
   k:'좋은데?',
   r:'チョウンデ',
