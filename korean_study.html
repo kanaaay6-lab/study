@@ -17,38 +17,26 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;max-width:480px;margin:0 auto;padding-bottom:60px;}
-
-/* NAV */
 .nav{width:100%;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px 10px;position:sticky;top:0;z-index:100;}
 .nav-title{text-align:center;font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--pl);letter-spacing:0.1em;margin-bottom:10px;}
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
 .tab{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:8px 2px;border-radius:8px;font-size:0.68rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;text-align:center;line-height:1.3;transition:all 0.2s;}
 .tab.active{background:var(--purple);border-color:var(--purple);color:#fff;font-weight:700;}
-
-/* SCREEN */
 .screen{display:none;width:100%;padding:14px 16px;flex-direction:column;align-items:center;gap:10px;}
 .screen.active{display:flex;}
-
-/* FILTER */
 .filter-wrap{display:flex;flex-wrap:wrap;gap:5px;width:100%;justify-content:center;}
 .f-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:20px;font-size:0.66rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all 0.18s;}
 .f-btn.active{border-color:var(--pl);color:var(--pl);background:var(--pdim);}
-
-/* SCORE */
 .scores{display:flex;gap:12px;font-family:'DM Mono',monospace;font-size:0.76rem;}
 .so{color:var(--green);}.sx{color:var(--red);}.sl{color:var(--muted);}
 .prog{width:100%;height:2px;background:var(--border);border-radius:2px;overflow:hidden;}
 .prog-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--pl));border-radius:2px;transition:width 0.4s;}
-
-/* FLIP CARD */
 .flip-wrap{width:100%;perspective:900px;cursor:pointer;}
 .flip-inner{width:100%;position:relative;transform-style:preserve-3d;transition:transform 0.45s;}
 .flip-inner.on{transform:rotateY(180deg);}
 .flip-face{position:absolute;width:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;}
 .flip-front{background:var(--card);border:1px solid var(--border);}
 .flip-back{background:var(--card2);border:1px solid var(--purple);box-shadow:0 0 20px var(--pglow);transform:rotateY(180deg);}
-
-/* 単語カード - fixed height */
 .word-flip .flip-wrap{height:180px;}
 .word-flip .flip-face{height:180px;}
 .word-kr{font-family:'Noto Sans KR',sans-serif;font-size:1.75rem;font-weight:700;color:var(--yellow);text-align:center;line-height:1.3;word-break:keep-all;max-width:100%;}
@@ -56,8 +44,6 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .word-reading{font-family:'DM Mono',monospace;font-size:0.73rem;color:var(--muted);}
 .word-kr-sm{font-family:'Noto Sans KR',sans-serif;font-size:0.9rem;color:var(--pl);font-weight:700;}
 .flip-label{font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
-
-/* フレーズカード - auto height */
 .phrase-flip .flip-wrap{height:auto;min-height:160px;}
 .phrase-flip .flip-face{position:relative;height:auto;min-height:160px;}
 .phrase-flip .flip-inner{height:auto;}
@@ -69,20 +55,14 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .phrase-row-val{font-size:0.85rem;color:var(--text);line-height:1.5;}
 .phrase-meaning-big{font-size:1rem;font-weight:700;color:var(--text);}
 .phrase-freq{font-size:0.85rem;}
-
-/* SPEAK */
 .speak-btn{background:var(--ydim);border:1px solid var(--yellow);color:var(--yellow);padding:7px 18px;border-radius:20px;font-size:0.75rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;white-space:nowrap;flex-shrink:0;}
 .speak-btn:active{background:rgba(255,217,61,0.25);}
-
-/* EMOTION TAG */
 .emotion-tag{font-size:0.65rem;padding:3px 9px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:0.05em;}
 .et-positive{background:rgba(74,222,128,0.12);border:1px solid var(--green);color:var(--green);}
 .et-negative{background:rgba(248,113,113,0.12);border:1px solid var(--red);color:var(--red);}
 .et-reaction{background:rgba(255,217,61,0.12);border:1px solid var(--yellow);color:var(--yellow);}
 .et-chatting{background:var(--pdim);border:1px solid var(--pl);color:var(--pl);}
 .et-streaming{background:rgba(96,165,250,0.12);border:1px solid #60a5fa;color:#60a5fa;}
-
-/* BUTTONS */
 .btn{width:100%;border:none;padding:12px;border-radius:10px;font-size:0.85rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:700;transition:all 0.15s;}
 .btn:active{transform:scale(0.98);}
 .btn-p{background:linear-gradient(135deg,var(--purple),var(--pl));color:#fff;box-shadow:0 4px 14px var(--pglow);}
@@ -92,15 +72,11 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .btn:disabled{opacity:0.35;cursor:default;transform:none;}
 .row2{display:flex;gap:8px;width:100%;}
 .row2 .btn{flex:1;}
-
-/* RESULT */
 .result-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;width:100%;padding-top:16px;}
 .result-icon{font-size:3rem;}
 .result-score{font-family:'DM Mono',monospace;font-size:1.6rem;color:var(--yellow);text-shadow:0 0 20px rgba(255,217,61,0.35);}
 .result-msg{color:var(--muted);font-size:0.82rem;line-height:1.7;}
 .result-wrong{color:var(--red);font-size:0.78rem;}
-
-/* HOW TO */
 .howto{width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-size:0.78rem;line-height:1.8;color:var(--muted);}
 .howto strong{color:var(--text);display:block;margin-top:12px;margin-bottom:2px;}
 .howto strong:first-child{margin-top:0;}
@@ -119,7 +95,6 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
   </div>
 </div>
 
-<!-- ════ 単語カード ════ -->
 <div class="screen active" id="screen-word">
   <div class="filter-wrap" id="word-filters"></div>
   <div class="scores">
@@ -128,7 +103,6 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
     <span class="sl">残り <span id="w-left">0</span></span>
   </div>
   <div class="prog"><div class="prog-bar" id="w-prog" style="width:0%"></div></div>
-
   <div id="w-game" class="word-flip" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px">
     <div class="flip-wrap" onclick="wFlip()">
       <div class="flip-inner" id="w-inner">
@@ -151,7 +125,6 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
       <button class="btn btn-g" onclick="wJudge(true)">⭕ わかった！</button>
     </div>
   </div>
-
   <div id="w-result" style="display:none;width:100%">
     <div class="result-wrap">
       <div class="result-icon" id="w-emoji">🐦‍⬛</div>
@@ -164,7 +137,6 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
   </div>
 </div>
 
-<!-- ════ フレーズカード ════ -->
 <div class="screen" id="screen-phrase">
   <div class="filter-wrap" id="phrase-filters"></div>
   <div class="scores">
@@ -173,7 +145,6 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
     <span class="sl">残り <span id="p-left">0</span></span>
   </div>
   <div class="prog"><div class="prog-bar" id="p-prog" style="width:0%"></div></div>
-
   <div id="p-game" class="phrase-flip" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px">
     <div class="flip-wrap" onclick="pFlip()">
       <div class="flip-inner" id="p-inner">
@@ -210,7 +181,6 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
       <button class="btn btn-g" onclick="pJudge(true)">⭕ わかった！</button>
     </div>
   </div>
-
   <div id="p-result" style="display:none;width:100%">
     <div class="result-wrap">
       <div class="result-icon" id="p-emoji">🐦‍⬛</div>
@@ -223,17 +193,16 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
   </div>
 </div>
 
-<!-- ════ 追加方法 ════ -->
 <div class="screen" id="screen-howto">
   <div class="section-title">単語の追加方法</div>
   <div class="howto">
     <strong>① ChatGPTにこの形式で出力してもらう（単語）</strong>
     <code>{k:'단어', r:'カタカナ', m:'意味', cat:'カテゴリ', emotion:'タグ'},</code>
-    emotion タグ：positive / negative / reaction / chatting / streaming
+    emotion：positive / negative / reaction / chatting / streaming
 
     <strong>② フレーズはこの形式</strong>
     <code>{k:'フレーズ', r:'カタカナ', m:'意味', scene:'場面', emotion:'タグ', freq:'🔥'},</code>
-    freq：🔥 よく出る　👍 たまに出る　💡 知っておくと良い
+    freq：🔥よく出る　👍たまに出る　💡知っておくと良い
 
     <strong>③ GitHubで korean_study.html を開いて✏️編集</strong>
 
@@ -250,21 +219,20 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 // ★単語ここに追加★
 // ══════════════════════
 const ALL_WORDS = [
- {k:‘먹고 살다’, r:‘モッコ サルダ’, m:‘食べて生きる・食っていく’, cat:‘verbs’, emotion:‘chatting’},
- {k:‘작업하다’, r:‘チャゴパダ’, m:‘作業する・制作する’, cat:‘streaming’, emotion:‘streaming’},
- {k:‘들어오다’, r:‘トゥロオダ’, m:‘入ってくる・配信に来る’, cat:‘streaming’, emotion:‘chatting’},
- {k:‘조회수’, r:‘チョフェス’, m:‘再生数’, cat:‘streaming’, emotion:‘streaming’},
- {k:‘편집’, r:‘ピョンジプ’, m:‘編集’, cat:‘streaming’, emotion:‘streaming’},
- {k:‘영상’, r:‘ヨンサン’, m:‘映像・動画’, cat:‘streaming’, emotion:‘streaming’},
- {k:‘빵 터지다’, r:‘パン トジダ’, m:‘爆笑する’, cat:‘slang’, emotion:‘reaction’},
- {k:‘굳이’, r:‘クッチ’, m:‘わざわざ’, cat:‘connectors’, emotion:‘chatting’},
- {k:‘잘하다’, r:‘チャラダ’, m:‘上手い・得意だ’, cat:‘verbs’, emotion:‘positive’},
- {k:‘신경 쓰다’, r:‘シンギョン スダ’, m:‘気にする’, cat:‘emotion’, emotion:‘negative’},
- {k:‘눈물’, r:‘ヌンムル’, m:‘涙’, cat:‘emotion’, emotion:‘reaction’},
- {k:‘한마디’, r:‘ハンマディ’, m:‘一言’, cat:‘other’, emotion:‘chatting’},
- {k:‘못 하다’, r:‘モタダ’, m:‘できない’, cat:‘verbs’, emotion:‘negative’},
- {k:‘진짜’, r:‘チンチャ’, m:‘マジで・本当に’, cat:‘reaction’, emotion:‘reaction’},
- {k:‘요즘’, r:‘ヨジュム’, m:‘最近’, cat:‘other’, emotion:‘chatting’},
+  {k:'먹고 살다',r:'モッコ サルダ',m:'食べて生きる・食っていく',cat:'verbs',emotion:'chatting'},
+  {k:'작업하다',r:'チャゴパダ',m:'作業する・制作する',cat:'streaming',emotion:'streaming'},
+  {k:'들어오다',r:'トゥロオダ',m:'入ってくる・配信に来る',cat:'streaming',emotion:'chatting'},
+  {k:'조회수',r:'チョフェス',m:'再生数',cat:'streaming',emotion:'streaming'},
+  {k:'편집',r:'ピョンジプ',m:'編集',cat:'streaming',emotion:'streaming'},
+  {k:'영상',r:'ヨンサン',m:'映像・動画',cat:'streaming',emotion:'streaming'},
+  {k:'빵 터지다',r:'パン トジダ',m:'爆笑する',cat:'slang',emotion:'reaction'},
+  {k:'굳이',r:'クッチ',m:'わざわざ',cat:'connectors',emotion:'chatting'},
+  {k:'잘하다',r:'チャラダ',m:'上手い・得意だ',cat:'verbs',emotion:'positive'},
+  {k:'신경 쓰다',r:'シンギョン スダ',m:'気にする',cat:'emotion',emotion:'negative'},
+  {k:'눈물',r:'ヌンムル',m:'涙',cat:'emotion',emotion:'reaction'},
+  {k:'한마디',r:'ハンマディ',m:'一言',cat:'other',emotion:'chatting'},
+  {k:'못 하다',r:'モタダ',m:'できない',cat:'verbs',emotion:'negative'},
+  {k:'요즘',r:'ヨジュム',m:'最近',cat:'other',emotion:'chatting'},
   {k:'훨씬',r:'ホルッシン',m:'はるかに',cat:'connectors',emotion:'chatting'},
   {k:'괜찮다',r:'ケンチャンタ',m:'大丈夫・良い',cat:'emotion',emotion:'positive'},
   {k:'괜찮아졌다',r:'ケンチャナジョッタ',m:'良くなった',cat:'emotion',emotion:'positive'},
@@ -352,723 +320,96 @@ const ALL_WORDS = [
 // ★フレーズここに追加★
 // ══════════════════════
 const ALL_PHRASES = [
-  {
-k:‘먹고 살아야지’,
-r:‘モッコ サラヤジ’,
-m:‘食っていかなきゃね’,
-scene:‘雑談・運営ネタ’,
-emotion:‘chatting’,
-freq:‘🔥’
-},
+  {k:'먹고 살아야지',r:'モッコ サラヤジ',m:'食っていかなきゃね',scene:'雑談・運営ネタ',emotion:'chatting',freq:'🔥'},
+  {k:'더 열심히 작업합니다',r:'ト ヨルシミ チャゴッカムニダ',m:'もっと頑張って作業します',scene:'制作・VTuber準備',emotion:'streaming',freq:'👍'},
+  {k:'많이 자주 들어와 주세요',r:'マニ チャジュ トゥロワ ジュセヨ',m:'たくさん遊びに来てください',scene:'配信締め・宣伝',emotion:'streaming',freq:'🔥'},
+  {k:'채팅도 똑같이',r:'チェティンド トッカチ',m:'チャットも同じように',scene:'コメント反応',emotion:'chatting',freq:'👍'},
+  {k:'조회수가 증가하고',r:'チョフェスガ チュンガハゴ',m:'再生数が増えてて',scene:'動画・配信分析',emotion:'streaming',freq:'👍'},
+  {k:'편집 영상',r:'ピョンジプ ヨンサン',m:'編集映像',scene:'ショーツ・切り抜き',emotion:'streaming',freq:'🔥'},
+  {k:'빵 터지니까',r:'パン トジニカ',m:'爆笑しちゃって',scene:'笑いリアクション',emotion:'reaction',freq:'🔥'},
+  {k:'이런 거 굳이?',r:'イロンゴ クッチ',m:'これわざわざ必要？',scene:'ツッコミ',emotion:'reaction',freq:'🔥'},
+  {k:'잘하는 것만',r:'チャラヌン ゴンマン',m:'得意なやつだけ',scene:'ゲーム・自己評価',emotion:'chatting',freq:'👍'},
+  {k:'신경 써서 미안',r:'シンギョン ソソ ミアン',m:'気にしすぎてごめん',scene:'謝罪・気遣い',emotion:'negative',freq:'👍'},
+  {k:'어떡해서 눈물…',r:'オットケソ ヌンムル',m:'どうしよう、涙…',scene:'感動・泣き',emotion:'reaction',freq:'👍'},
+  {k:'한마디 들으면',r:'ハンマディ トゥルミョン',m:'一言聞くと',scene:'雑談・感想',emotion:'chatting',freq:'👍'},
+  {k:'이거는 못 하니까',r:'イゴヌン モタニカ',m:'これはできないから',scene:'説明・言い訳',emotion:'chatting',freq:'🔥'},
+  {k:'진짜 지금',r:'チンチャ チグム',m:'マジで今',scene:'強調・リアクション',emotion:'reaction',freq:'🔥'},
+  {k:'이게 요즘에',r:'イゲ ヨジュメ',m:'これ最近さ〜',scene:'雑談導入',emotion:'chatting',freq:'🔥'},
+  {k:'좋은데?',r:'チョウンデ',m:'いいけど？',scene:'感想・確認',emotion:'positive',freq:'🔥'},
+  {k:'진짜 웃겨',r:'チンチャ ウッキョ',m:'マジで笑える',scene:'笑い',emotion:'positive',freq:'🔥'},
+  {k:'여기 있어',r:'ヨギ イッソ',m:'ここにいる',scene:'ゲーム・位置確認',emotion:'streaming',freq:'🔥'},
+  {k:'큰일났네',r:'クニルラッネ',m:'やばいことになった',scene:'事故・焦り',emotion:'negative',freq:'🔥'},
+  {k:'뭐 하지?',r:'ムォ ハジ',m:'何しよう',scene:'雑談・待機',emotion:'chatting',freq:'🔥'},
+  {k:'그냥 해',r:'クニャン ヘ',m:'そのままやれ',scene:'ゲーム・雑談',emotion:'chatting',freq:'👍'},
+  {k:'말이 안 돼',r:'マリ アン ドェ',m:'ありえない',scene:'驚き・事故',emotion:'reaction',freq:'🔥'},
+  {k:'진짜 귀엽다',r:'チンチャ クィヨプタ',m:'マジでかわいい',scene:'キャラ・リアクション',emotion:'positive',freq:'🔥'},
+  {k:'어쩔 수 없지',r:'オッチョル ス オプチ',m:'仕方ないよね',scene:'諦め・雑談',emotion:'chatting',freq:'👍'},
+  {k:'미쳤다',r:'ミチョッタ',m:'やばい',scene:'驚き・テンション',emotion:'reaction',freq:'🔥'},
+  {k:'와 진짜',r:'ワ チンチャ',m:'うわマジで',scene:'驚き・リアクション',emotion:'reaction',freq:'🔥'},
+  {k:'뭐야?',r:'ムォヤ',m:'何これ？',scene:'驚き・ツッコミ',emotion:'reaction',freq:'🔥'},
+  {k:'근데 지금',r:'クンデ チグム',m:'でも今さ',scene:'雑談開始',emotion:'chatting',freq:'🔥'},
+  {k:'잠깐만',r:'チャムカンマン',m:'ちょっと待って',scene:'操作・確認',emotion:'chatting',freq:'🔥'},
+  {k:'못 살겠어',r:'モッ サルゲッソ',m:'やってられない',scene:'イライラ・崩壊',emotion:'negative',freq:'🔥'},
+  {k:'마음에 들어',r:'マウメ ドゥロ',m:'気に入った',scene:'見た目・感想',emotion:'positive',freq:'🔥'},
+  {k:'훨씬 낫다',r:'ホルッシン ナッタ',m:'かなり良くなった',scene:'比較・改善',emotion:'positive',freq:'🔥'},
+  {k:'괜찮은데?',r:'ケンチャヌンデ',m:'結構いいけど？',scene:'感想・確認',emotion:'positive',freq:'🔥'},
+  {k:'어디 갔어?',r:'オディ カッソ',m:'どこ行った？',scene:'ゲーム・人探し',emotion:'streaming',freq:'🔥'},
+  {k:'여기 사람 없는데?',r:'ヨギ サラム オムヌンデ',m:'ここ人いないけど？',scene:'ゲーム・狩場',emotion:'streaming',freq:'🔥'},
+  {k:'채널 이동해보자',r:'チェノル イドンヘボジャ',m:'チャンネル移動してみよう',scene:'ゲーム・移動',emotion:'streaming',freq:'👍'},
+  {k:'선점 끝났네',r:'ソンジョム クンナンネ',m:'先取り終わってるね',scene:'ゲーム・狩場争い',emotion:'streaming',freq:'👍'},
+  {k:'와 대박',r:'ワ テバク',m:'うわやば',scene:'驚き',emotion:'reaction',freq:'🔥'},
+  {k:'아 진짜',r:'ア チンチャ',m:'あ〜マジで',scene:'呆れ・困惑',emotion:'negative',freq:'🔥'},
+  {k:'왜 이래?',r:'ウェ イレ',m:'なんでこうなの？',scene:'困惑・ツッコミ',emotion:'negative',freq:'🔥'},
+  {k:'그냥 다 흩어졌어',r:'クニャン タ フットジョッソ',m:'全部崩れた',scene:'食事崩壊・事故',emotion:'reaction',freq:'👍'},
+  {k:'받쳐 먹고 있어',r:'パッチョ モッコ イッソ',m:'支えながら食べてる',scene:'食事崩壊',emotion:'reaction',freq:'👍'},
+  {k:'개밥마냥',r:'ケバンマニャン',m:'犬のエサみたい',scene:'ぐちゃぐちゃ状態',emotion:'reaction',freq:'💡'},
+  {k:'잠깐 갔다 올게요',r:'チャムカン カッタ オルケヨ',m:'ちょっと行ってきます',scene:'離席',emotion:'chatting',freq:'🔥'},
+  {k:'여러분들',r:'ヨロブンドゥル',m:'みなさん〜',scene:'配信呼びかけ',emotion:'chatting',freq:'🔥'},
+  {k:'진짜 이유 없어',r:'チンチャ イユ オプソ',m:'マジで理由ない',scene:'雑談',emotion:'chatting',freq:'👍'},
+  {k:'사람들이 심심한 거야',r:'サラムドゥリ シムシマン ゴヤ',m:'みんな暇なんだよ',scene:'雑談・ツッコミ',emotion:'reaction',freq:'👍'},
+  {k:'삼만 치즈 고마워요',r:'サムマン チジュ コマウォヨ',m:'3万チーズありがとう',scene:'投げ銭感謝',emotion:'positive',freq:'👍'},
+  {k:'추가 고마워요',r:'チュガ コマウォヨ',m:'追加ありがとう',scene:'投げ銭感謝',emotion:'positive',freq:'👍'},
+  {k:'오 훨씬 부드러워졌는데?',r:'オ ホルッシン ブドゥロウォジョンヌンデ',m:'お、かなり滑らかになった',scene:'モデル変更・改善',emotion:'positive',freq:'👍'},
+  {k:'좋아 마음에 들어',r:'チョア マウメ ドゥロ',m:'いいね、気に入った',scene:'見た目感想',emotion:'positive',freq:'🔥'},
+  {k:'지금 렙 몇이야?',r:'チグム レプ ミョシヤ',m:'今レベルいくつ？',scene:'ゲーム・コメント返信',emotion:'streaming',freq:'🔥'},
+  {k:'가서 찾아야 돼',r:'カソ チャジャヤ デ',m:'行って探さないと',scene:'ゲーム進行',emotion:'streaming',freq:'👍'},
+  {k:'어디서 소리 나는데?',r:'オディソ ソリ ナヌンデ',m:'どこから音してる？',scene:'ゲーム・異変',emotion:'reaction',freq:'👍'},
+  {k:'볼 줄 알았는데 다르더라',r:'ボル ジュル アラットヌンデ タルドドラ',m:'そうなると思ったけど違った',scene:'感想・予想外',emotion:'chatting',freq:'👍'},
+];
 
-{
-k:‘더 열심히 작업합니다’,
-r:‘ト ヨルシミ チャゴッカムニダ’,
-m:‘もっと頑張って作業します’,
-scene:‘制作・VTuber準備’,
-emotion:‘streaming’,
-freq:‘👍’
-},
-
-{
-k:‘많이 자주 들어와 주세요’,
-r:‘マニ チャジュ トゥロワ ジュセヨ’,
-m:‘たくさん遊びに来てください’,
-scene:‘配信締め・宣伝’,
-emotion:‘streaming’,
-freq:‘🔥’
-},
-
-{
-k:‘채팅도 똑같이’,
-r:‘チェティンド トッカチ’,
-m:‘チャットも同じように’,
-scene:‘コメント反応’,
-emotion:‘chatting’,
-freq:‘👍’
-},
-
-{
-k:‘조회수가 증가하고’,
-r:‘チョフェスガ チュンガハゴ’,
-m:‘再生数が増えてて’,
-scene:‘動画・配信分析’,
-emotion:‘streaming’,
-freq:‘👍’
-},
-
-{
-k:‘편집 영상’,
-r:‘ピョンジプ ヨンサン’,
-m:‘編集映像’,
-scene:‘ショーツ・切り抜き’,
-emotion:‘streaming’,
-freq:‘🔥’
-},
-
-{
-k:‘빵 터지니까’,
-r:‘パン トジニカ’,
-m:‘爆笑しちゃって’,
-scene:‘笑いリアクション’,
-emotion:‘reaction’,
-freq:‘🔥’
-},
-
-{
-k:‘이런 거 굳이?’,
-r:‘イロンゴ クッチ?’,
-m:‘これわざわざ必要？’,
-scene:‘ツッコミ’,
-emotion:‘reaction’,
-freq:‘🔥’
-},
-
-{
-k:‘잘하는 것만’,
-r:‘チャラヌン ゴンマン’,
-m:‘得意なやつだけ’,
-scene:‘ゲーム・自己評価’,
-emotion:‘chatting’,
-freq:‘👍’
-},
-
-{
-k:‘신경 써서 미안’,
-r:‘シンギョン ソソ ミアン’,
-m:‘気にしすぎてごめん’,
-scene:‘謝罪・気遣い’,
-emotion:‘negative’,
-freq:‘👍’
-},
-
-{
-k:‘어떡해서 눈물…’,
-r:‘オットケソ ヌンムル’,
-m:‘どうしよう、涙…’,
-scene:‘感動・泣き’,
-emotion:‘reaction’,
-freq:‘👍’
-},
-
-{
-k:‘한마디 들으면’,
-r:‘ハンマディ トゥルミョン’,
-m:‘一言聞くと’,
-scene:‘雑談・感想’,
-emotion:‘chatting’,
-freq:‘👍’
-},
-
-{
-k:‘이거는 못 하니까’,
-r:‘イゴヌン モタニカ’,
-m:‘これはできないから’,
-scene:‘説明・言い訳’,
-emotion:‘chatting’,
-freq:‘🔥’
-},
-
-{
-k:‘진짜 지금’,
-r:‘チンチャ チグム’,
-m:‘マジで今’,
-scene:‘強調・リアクション’,
-emotion:‘reaction’,
-freq:‘🔥’
-},
-
-{
-k:‘이게 요즘에’,
-r:‘イゲ ヨジュメ’,
-m:‘これ最近さ〜’,
-scene:‘雑談導入’,
-emotion:‘chatting’,
-freq:‘🔥’
-}
-  {
-  k:'좋은데?',
-  r:'チョウンデ',
-  m:'いいけど？',
-  scene:'感想・確認',
-  emotion:'positive',
-  freq:'🔥'
-},
-
-{
-  k:'진짜 웃겨',
-  r:'チンチャ ウッキョ',
-  m:'マジで笑える',
-  scene:'笑い',
-  emotion:'positive',
-  freq:'🔥'
-},
-
-{
-  k:'여기 있어',
-  r:'ヨギ イッソ',
-  m:'ここにいる',
-  scene:'ゲーム・位置確認',
-  emotion:'streaming',
-  freq:'🔥'
-},
-
-{
-  k:'큰일났네',
-  r:'クニルラッネ',
-  m:'やばいことになった',
-  scene:'事故・焦り',
-  emotion:'negative',
-  freq:'🔥'
-},
-
-{
-  k:'뭐 하지?',
-  r:'ムォ ハジ',
-  m:'何しよう',
-  scene:'雑談・待機',
-  emotion:'chatting',
-  freq:'🔥'
-},
-
-{
-  k:'그냥 해',
-  r:'クニャン ヘ',
-  m:'そのままやれ',
-  scene:'ゲーム・雑談',
-  emotion:'chatting',
-  freq:'👍'
-},
-
-{
-  k:'말이 안 돼',
-  r:'マリ アン ドェ',
-  m:'ありえない',
-  scene:'驚き・事故',
-  emotion:'reaction',
-  freq:'🔥'
-},
-
-{
-  k:'진짜 귀엽다',
-  r:'チンチャ クィヨプタ',
-  m:'マジでかわいい',
-  scene:'キャラ・リアクション',
-  emotion:'positive',
-  freq:'🔥'
-},
-
-{
-  k:'어쩔 수 없지',
-  r:'オッチョル ス オプチ',
-  m:'仕方ないよね',
-  scene:'諦め・雑談',
-  emotion:'chatting',
-  freq:'👍'
-},
-
-{
-  k:'미쳤다',
-  r:'ミチョッタ',
-  m:'やばい',
-  scene:'驚き・テンション',
-  emotion:'reaction',
-  freq:'🔥'
-},
-{
-  k:'와 진짜',
-  r:'ワ チンチャ',
-  m:'うわマジで',
-  scene:'驚き・リアクション',
-  emotion:'reaction',
-  freq:'🔥'
-},
-
-{
-  k:'뭐야?',
-  r:'ムォヤ',
-  m:'何これ？',
-  scene:'驚き・ツッコミ',
-  emotion:'reaction',
-  freq:'🔥'
-},
-
-{
-  k:'근데 지금',
-  r:'クンデ チグム',
-  m:'でも今さ',
-  scene:'雑談開始',
-  emotion:'chatting',
-  freq:'🔥'
-},
-
-{
-  k:'잠깐만',
-  r:'チャムカンマン',
-  m:'ちょっと待って',
-  scene:'操作・確認',
-  emotion:'chatting',
-  freq:'🔥'
-},
-
-{
-  k:'못 살겠어',
-  r:'モッ サルゲッソ',
-  m:'やってられない',
-  scene:'イライラ・崩壊',
-  emotion:'negative',
-  freq:'🔥'
-},
-
-{
-  k:'마음에 들어',
-  r:'マウメ ドゥロ',
-  m:'気に入った',
-  scene:'見た目・感想',
-  emotion:'positive',
-  freq:'🔥'
-},
-
-{
-  k:'훨씬 낫다',
-  r:'ホルッシン ナッタ',
-  m:'かなり良くなった',
-  scene:'比較・改善',
-  emotion:'positive',
-  freq:'🔥'
-},
-
-{
-  k:'괜찮은데?',
-  r:'ケンチャヌンデ',
-  m:'結構いいけど？',
-  scene:'感想・確認',
-  emotion:'positive',
-  freq:'🔥'
-},
-
-{
-  k:'어디 갔어?',
-  r:'オディ カッソ',
-  m:'どこ行った？',
-  scene:'ゲーム・人探し',
-  emotion:'streaming',
-  freq:'🔥'
-},
-
-{
-  k:'여기 사람 없는데?',
-  r:'ヨギ サラム オムヌンデ',
-  m:'ここ人いないけど？',
-  scene:'ゲーム・狩場',
-  emotion:'streaming',
-  freq:'🔥'
-},
-
-{
-  k:'채널 이동해보자',
-  r:'チェノル イドンヘボジャ',
-  m:'チャンネル移動してみよう',
-  scene:'ゲーム・移動',
-  emotion:'streaming',
-  freq:'👍'
-},
-
-{
-  k:'선점 끝났네',
-  r:'ソンジョム クンナンネ',
-  m:'先取り終わってるね',
-  scene:'ゲーム・狩場争い',
-  emotion:'streaming',
-  freq:'👍'
-},
-
-{
-  k:'와 대박',
-  r:'ワ テバク',
-  m:'うわやば',
-  scene:'驚き',
-  emotion:'reaction',
-  freq:'🔥'
-},
-
-{
-  k:'아 진짜',
-  r:'ア チンチャ',
-  m:'あ〜マジで',
-  scene:'呆れ・困惑',
-  emotion:'negative',
-  freq:'🔥'
-},
-
-{
-  k:'왜 이래?',
-  r:'ウェ イレ',
-  m:'なんでこうなの？',
-  scene:'困惑・ツッコミ',
-  emotion:'negative',
-  freq:'🔥'
-},
-
-{
-  k:'그냥 다 흩어졌어',
-  r:'クニャン タ フットジョッソ',
-  m:'全部崩れた',
-  scene:'食事崩壊・事故',
-  emotion:'reaction',
-  freq:'👍'
-},
-
-{
-  k:'받쳐 먹고 있어',
-  r:'パッチョ モッコ イッソ',
-  m:'支えながら食べてる',
-  scene:'食事崩壊',
-  emotion:'reaction',
-  freq:'👍'
-},
-
-{
-  k:'개밥마냥',
-  r:'ケバンマニャン',
-  m:'犬のエサみたい',
-  scene:'ぐちゃぐちゃ状態',
-  emotion:'reaction',
-  freq:'💡'
-},
-
-{
-  k:'빵 잘못 잘랐나?',
-  r:'パン チャルモッ チャルランナ',
-  m:'パン切るの失敗した？',
-  scene:'食事雑談',
-  emotion:'reaction',
-  freq:'💡'
-},
-
-{
-  k:'잠깐 갔다 올게요',
-  r:'チャムカン カッタ オルケヨ',
-  m:'ちょっと行ってきます',
-  scene:'離席',
-  emotion:'chatting',
-  freq:'🔥'
-},
-
-{
-  k:'여러분들',
-  r:'ヨロブンドゥル',
-  m:'みなさん〜',
-  scene:'配信呼びかけ',
-  emotion:'chatting',
-  freq:'🔥'
-},
-
-{
-  k:'진짜 이유 없어',
-  r:'チンチャ イユ オプソ',
-  m:'マジで理由ない',
-  scene:'雑談',
-  emotion:'chatting',
-  freq:'👍'
-},
-
-{
-  k:'사람들이 심심한 거야',
-  r:'サラムドゥリ シムシマン ゴヤ',
-  m:'みんな暇なんだよ',
-  scene:'雑談・ツッコミ',
-  emotion:'reaction',
-  freq:'👍'
-},
-
-{
-  k:'삼만 치즈 고마워요',
-  r:'サムマン チジュ コマウォヨ',
-  m:'3万チーズありがとう',
-  scene:'投げ銭感謝',
-  emotion:'positive',
-  freq:'👍'
-},
-
-{
-  k:'추가 고마워요',
-  r:'チュガ コマウォヨ',
-  m:'追加ありがとう',
-  scene:'投げ銭感謝',
-  emotion:'positive',
-  freq:'👍'
-},
-
-{
-  k:'오 훨씬 부드러워졌는데?',
-  r:'オ ホルッシン ブドゥロウォジョンヌンデ',
-  m:'お、かなり滑らかになった',
-  scene:'モデル変更・改善',
-  emotion:'positive',
-  freq:'👍'
-},
-
-{
-  k:'좋아 마음에 들어',
-  r:'チョア マウメ ドゥロ',
-  m:'いいね、気に入った',
-  scene:'見た目感想',
-  emotion:'positive',
-  freq:'🔥'
-},
-
-{
-  k:'롤 느낌 난다',
-  r:'ロル ヌッキム ナンダ',
-  m:'LoLっぽい感じする',
-  scene:'見た目・ゲーム感想',
-  emotion:'streaming',
-  freq:'💡'
-},
-
-{
-  k:'지금 렙 몇이야?',
-  r:'チグム レプ ミョシヤ',
-  m:'今レベルいくつ？',
-  scene:'ゲーム・コメント返信',
-  emotion:'streaming',
-  freq:'🔥'
-},
-
-{
-  k:'가서 찾아야 돼',
-  r:'カソ チャジャヤ デ',
-  m:'行って探さないと',
-  scene:'ゲーム進行',
-  emotion:'streaming',
-  freq:'👍'
-},
-
-{
-  k:'어디서 소리 나는데?',
-  r:'オディソ ソリ ナヌンデ',
-  m:'どこから音してる？',
-  scene:'ゲーム・異変',
-  emotion:'reaction',
-  freq:'👍'
-},
-
-{
-  k:'볼 줄 알았는데',
-  r:'ボル ジュル アラットヌンデ',
-  m:'そうなると思ったけど',
-  scene:'予想・感想',
-  emotion:'chatting',
-  freq:'👍'
-},
-
-{
-  k:'다르더라',
-  r:'タルドドラ',
-  m:'違ったんだよね',
-  scene:'感想・オチ',
-  emotion:'reaction',
-  freq:'👍'
-},
-
-{
-  k:'와 그냥 개밥이야',
-  r:'ワ クニャン ケバビヤ',
-  m:'うわ普通に犬のエサじゃん',
-  scene:'食事崩壊・笑い',
-  emotion:'reaction',
-  freq:'💡'
-},
-
-// ══ 共通 ══
-const EMOTIONS = ['all','positive','negative','reaction','chatting','streaming'];
-const E_JP = {all:'全部',positive:'✨ positive',negative:'😤 negative',reaction:'😲 reaction',chatting:'💬 chatting',streaming:'🎮 streaming'};
-const E_CLASS = {positive:'et-positive',negative:'et-negative',reaction:'et-reaction',chatting:'et-chatting',streaming:'et-streaming'};
-
+const EMOTIONS=['all','positive','negative','reaction','chatting','streaming'];
+const E_JP={all:'全部',positive:'✨ positive',negative:'😤 negative',reaction:'😲 reaction',chatting:'💬 chatting',streaming:'🎮 streaming'};
+const E_CLASS={positive:'et-positive',negative:'et-negative',reaction:'et-reaction',chatting:'et-chatting',streaming:'et-streaming'};
 let wWrong=[],pWrong=[];
 
 function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
-function spk(t){
-  if(!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(t);
-  u.lang='ko-KR';u.rate=0.85;
-  window.speechSynthesis.speak(u);
-}
-function calcRes(o,total){
-  const p=Math.round((o/total)*100);
-  let icon='😢',msg='まだまだこれから！毎日少し聞こう 🎧';
-  if(p>=90){icon='🔥';msg='완벽해！ほぼ完璧！';}
-  else if(p>=70){icon='🎉';msg='잘했어！いい調子！';}
-  else if(p>=50){icon='👍';msg='절반 이상！半分以上わかった！';}
-  return{icon,msg};
-}
-function eTag(emotion){
-  const d=document.createElement('div');
-  d.className='emotion-tag '+(E_CLASS[emotion]||'et-chatting');
-  d.textContent=E_JP[emotion]||emotion;
-  return d;
-}
-function buildFilters(id,fn){
-  const w=document.getElementById(id);w.innerHTML='';
-  EMOTIONS.forEach(e=>{
-    const b=document.createElement('button');
-    b.className='f-btn'+(e==='all'?' active':'');
-    b.textContent=E_JP[e];
-    b.onclick=()=>{w.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');fn(e);};
-    w.appendChild(b);
-  });
-}
-function switchMode(mode,btn){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('screen-'+mode).classList.add('active');
-  btn.classList.add('active');
-}
+function spk(t){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=0.85;window.speechSynthesis.speak(u);}
+function calcRes(o,total){const p=Math.round((o/total)*100);let icon='😢',msg='まだまだこれから！毎日少し聞こう 🎧';if(p>=90){icon='🔥';msg='완벽해！ほぼ完璧！';}else if(p>=70){icon='🎉';msg='잘했어！いい調子！';}else if(p>=50){icon='👍';msg='절반 이상！半分以上わかった！';}return{icon,msg};}
+function eTag(e){const d=document.createElement('div');d.className='emotion-tag '+(E_CLASS[e]||'et-chatting');d.textContent=E_JP[e]||e;return d;}
+function buildFilters(id,fn){const w=document.getElementById(id);w.innerHTML='';EMOTIONS.forEach(e=>{const b=document.createElement('button');b.className='f-btn'+(e==='all'?' active':'');b.textContent=E_JP[e];b.onclick=()=>{w.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');fn(e);};w.appendChild(b);});}
+function switchMode(mode,btn){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('screen-'+mode).classList.add('active');btn.classList.add('active');}
 
-// ══ 単語カード ══
 let wDeck=[],wIdx=0,wO=0,wX=0,wCat='all',wFlipped=false;
 function curW(){return wDeck[wIdx]||{k:'',r:'',m:'',emotion:'chatting'};}
+function wInit(){buildFilters('word-filters',e=>{wCat=e;wRestart();});wRestart();}
+function wRestart(){wO=0;wX=0;wIdx=0;wFlipped=false;wWrong=[];wDeck=shuf(wCat==='all'?ALL_WORDS:ALL_WORDS.filter(w=>w.emotion===wCat));document.getElementById('w-result').style.display='none';document.getElementById('w-game').style.display='flex';wUpdate();wShow();}
+function wShow(){wFlipped=false;const w=curW();document.getElementById('w-kr').textContent=w.k;document.getElementById('w-m').textContent=w.m;document.getElementById('w-r').textContent=w.r;document.getElementById('w-kr2').textContent=w.k;const et=document.getElementById('w-etag');et.innerHTML='';et.appendChild(eTag(w.emotion));document.getElementById('w-inner').classList.remove('on');document.getElementById('w-flip-btn').style.display='block';document.getElementById('w-judge').style.display='none';setTimeout(()=>spk(w.k),350);}
+function wFlip(){if(wFlipped)return;wFlipped=true;document.getElementById('w-inner').classList.add('on');document.getElementById('w-flip-btn').style.display='none';document.getElementById('w-judge').style.display='flex';}
+function wJudge(ok){if(!ok)wWrong.push(curW());if(ok)wO++;else wX++;wIdx++;wUpdate();if(wIdx>=wDeck.length)wResult();else wShow();}
+function wUpdate(){document.getElementById('w-o').textContent=wO;document.getElementById('w-x').textContent=wX;document.getElementById('w-left').textContent=Math.max(0,wDeck.length-wIdx);document.getElementById('w-prog').style.width=(wDeck.length>0?(wIdx/wDeck.length*100):0)+'%';}
+function wResult(){document.getElementById('w-game').style.display='none';document.getElementById('w-result').style.display='block';const{icon,msg}=calcRes(wO,wDeck.length);document.getElementById('w-emoji').textContent=icon;document.getElementById('w-score').textContent=wO+' / '+wDeck.length;document.getElementById('w-msg').textContent=msg;document.getElementById('w-wn').textContent=wWrong.length>0?'❌ 間違えた単語：'+wWrong.length+'個':'';document.getElementById('w-retry').style.display=wWrong.length>0?'block':'none';}
+function wRetryWrong(){const retry=shuf([...wWrong]);wWrong=[];wO=0;wX=0;wIdx=0;wFlipped=false;wDeck=retry;document.getElementById('w-result').style.display='none';document.getElementById('w-game').style.display='flex';wUpdate();wShow();}
 
-function wInit(){
-  buildFilters('word-filters',e=>{wCat=e;wRestart();});
-  wRestart();
-}
-function wRestart(){
-  wO=0;wX=0;wIdx=0;wFlipped=false;wWrong=[];
-  wDeck=shuf(wCat==='all'?ALL_WORDS:ALL_WORDS.filter(w=>w.emotion===wCat));
-  document.getElementById('w-result').style.display='none';
-  document.getElementById('w-game').style.display='flex';
-  wUpdate();wShow();
-}
-function wShow(){
-  wFlipped=false;
-  const w=curW();
-  document.getElementById('w-kr').textContent=w.k;
-  document.getElementById('w-m').textContent=w.m;
-  document.getElementById('w-r').textContent=w.r;
-  document.getElementById('w-kr2').textContent=w.k;
-  const et=document.getElementById('w-etag');
-  et.innerHTML='';et.appendChild(eTag(w.emotion));
-  document.getElementById('w-inner').classList.remove('on');
-  document.getElementById('w-flip-btn').style.display='block';
-  document.getElementById('w-judge').style.display='none';
-  setTimeout(()=>spk(w.k),350);
-}
-function wFlip(){
-  if(wFlipped)return;wFlipped=true;
-  document.getElementById('w-inner').classList.add('on');
-  document.getElementById('w-flip-btn').style.display='none';
-  document.getElementById('w-judge').style.display='flex';
-}
-function wJudge(ok){
-  if(!ok)wWrong.push(curW());
-  if(ok)wO++;else wX++;
-  wIdx++;wUpdate();
-  if(wIdx>=wDeck.length)wResult();else wShow();
-}
-function wUpdate(){
-  document.getElementById('w-o').textContent=wO;
-  document.getElementById('w-x').textContent=wX;
-  document.getElementById('w-left').textContent=Math.max(0,wDeck.length-wIdx);
-  document.getElementById('w-prog').style.width=(wDeck.length>0?(wIdx/wDeck.length*100):0)+'%';
-}
-function wResult(){
-  document.getElementById('w-game').style.display='none';
-  document.getElementById('w-result').style.display='block';
-  const{icon,msg}=calcRes(wO,wDeck.length);
-  document.getElementById('w-emoji').textContent=icon;
-  document.getElementById('w-score').textContent=wO+' / '+wDeck.length;
-  document.getElementById('w-msg').textContent=msg;
-  document.getElementById('w-wn').textContent=wWrong.length>0?'❌ 間違えた単語：'+wWrong.length+'個':'';
-  document.getElementById('w-retry').style.display=wWrong.length>0?'block':'none';
-}
-function wRetryWrong(){
-  const retry=shuf([...wWrong]);
-  wWrong=[];wO=0;wX=0;wIdx=0;wFlipped=false;
-  wDeck=retry;
-  document.getElementById('w-result').style.display='none';
-  document.getElementById('w-game').style.display='flex';
-  wUpdate();wShow();
-}
-
-// ══ フレーズカード ══
 let pDeck=[],pIdx=0,pO=0,pX=0,pCat='all',pFlipped=false;
 function curP(){return pDeck[pIdx]||{k:'',r:'',m:'',scene:'',emotion:'chatting',freq:''};}
-
-function pInit(){
-  buildFilters('phrase-filters',e=>{pCat=e;pRestart();});
-  pRestart();
-}
-function pRestart(){
-  pO=0;pX=0;pIdx=0;pFlipped=false;pWrong=[];
-  pDeck=shuf(pCat==='all'?ALL_PHRASES:ALL_PHRASES.filter(p=>p.emotion===pCat));
-  document.getElementById('p-result').style.display='none';
-  document.getElementById('p-game').style.display='flex';
-  // フレーズカードの高さをリセット
-  document.getElementById('p-inner').style.height='';
-  pUpdate();pShow();
-}
-function pShow(){
-  pFlipped=false;
-  const p=curP();
-  document.getElementById('p-kr').textContent=p.k;
-  document.getElementById('p-m').textContent=p.m;
-  document.getElementById('p-r').textContent=p.r;
-  document.getElementById('p-scene').textContent=p.scene;
-  document.getElementById('p-freq').textContent=p.freq;
-  const et=document.getElementById('p-etag');
-  et.innerHTML='';et.appendChild(eTag(p.emotion));
-  const inner=document.getElementById('p-inner');
-  inner.classList.remove('on');
-  inner.style.height='';
-  document.getElementById('p-flip-btn').style.display='block';
-  document.getElementById('p-judge').style.display='none';
-  setTimeout(()=>spk(p.k),350);
-}
-function pFlip(){
-  if(pFlipped)return;pFlipped=true;
-  // フレーズカードは裏面の高さに合わせる
-  const inner=document.getElementById('p-inner');
-  const front=inner.querySelector('.flip-front');
-  const back=inner.querySelector('.flip-back');
-  const h=Math.max(front.scrollHeight,back.scrollHeight,160);
-  inner.style.height=h+'px';
-  inner.classList.add('on');
-  document.getElementById('p-flip-btn').style.display='none';
-  document.getElementById('p-judge').style.display='flex';
-}
-function pJudge(ok){
-  if(!ok)pWrong.push(curP());
-  if(ok)pO++;else pX++;
-  pIdx++;pUpdate();
-  if(pIdx>=pDeck.length)pResult();else pShow();
-}
-function pUpdate(){
-  document.getElementById('p-o').textContent=pO;
-  document.getElementById('p-x').textContent=pX;
-  document.getElementById('p-left').textContent=Math.max(0,pDeck.length-pIdx);
-  document.getElementById('p-prog').style.width=(pDeck.length>0?(pIdx/pDeck.length*100):0)+'%';
-}
-function pResult(){
-  document.getElementById('p-game').style.display='none';
-  document.getElementById('p-result').style.display='block';
-  const{icon,msg}=calcRes(pO,pDeck.length);
-  document.getElementById('p-emoji').textContent=icon;
-  document.getElementById('p-score').textContent=pO+' / '+pDeck.length;
-  document.getElementById('p-msg').textContent=msg;
-  document.getElementById('p-wn').textContent=pWrong.length>0?'❌ 間違えたフレーズ：'+pWrong.length+'個':'';
-  document.getElementById('p-retry').style.display=pWrong.length>0?'block':'none';
-}
-function pRetryWrong(){
-  const retry=shuf([...pWrong]);
-  pWrong=[];pO=0;pX=0;pIdx=0;pFlipped=false;
-  pDeck=retry;
-  document.getElementById('p-result').style.display='none';
-  document.getElementById('p-game').style.display='flex';
-  pUpdate();pShow();
-}
+function pInit(){buildFilters('phrase-filters',e=>{pCat=e;pRestart();});pRestart();}
+function pRestart(){pO=0;pX=0;pIdx=0;pFlipped=false;pWrong=[];pDeck=shuf(pCat==='all'?ALL_PHRASES:ALL_PHRASES.filter(p=>p.emotion===pCat));document.getElementById('p-result').style.display='none';document.getElementById('p-game').style.display='flex';document.getElementById('p-inner').style.height='';pUpdate();pShow();}
+function pShow(){pFlipped=false;const p=curP();document.getElementById('p-kr').textContent=p.k;document.getElementById('p-m').textContent=p.m;document.getElementById('p-r').textContent=p.r;document.getElementById('p-scene').textContent=p.scene;document.getElementById('p-freq').textContent=p.freq;const et=document.getElementById('p-etag');et.innerHTML='';et.appendChild(eTag(p.emotion));const inner=document.getElementById('p-inner');inner.classList.remove('on');inner.style.height='';document.getElementById('p-flip-btn').style.display='block';document.getElementById('p-judge').style.display='none';setTimeout(()=>spk(p.k),350);}
+function pFlip(){if(pFlipped)return;pFlipped=true;const inner=document.getElementById('p-inner');const front=inner.querySelector('.flip-front');const back=inner.querySelector('.flip-back');const h=Math.max(front.scrollHeight,back.scrollHeight,160);inner.style.height=h+'px';inner.classList.add('on');document.getElementById('p-flip-btn').style.display='none';document.getElementById('p-judge').style.display='flex';}
+function pJudge(ok){if(!ok)pWrong.push(curP());if(ok)pO++;else pX++;pIdx++;pUpdate();if(pIdx>=pDeck.length)pResult();else pShow();}
+function pUpdate(){document.getElementById('p-o').textContent=pO;document.getElementById('p-x').textContent=pX;document.getElementById('p-left').textContent=Math.max(0,pDeck.length-pIdx);document.getElementById('p-prog').style.width=(pDeck.length>0?(pIdx/pDeck.length*100):0)+'%';}
+function pResult(){document.getElementById('p-game').style.display='none';document.getElementById('p-result').style.display='block';const{icon,msg}=calcRes(pO,pDeck.length);document.getElementById('p-emoji').textContent=icon;document.getElementById('p-score').textContent=pO+' / '+pDeck.length;document.getElementById('p-msg').textContent=msg;document.getElementById('p-wn').textContent=pWrong.length>0?'❌ 間違えたフレーズ：'+pWrong.length+'個':'';document.getElementById('p-retry').style.display=pWrong.length>0?'block':'none';}
+function pRetryWrong(){const retry=shuf([...pWrong]);pWrong=[];pO=0;pX=0;pIdx=0;pFlipped=false;pDeck=retry;document.getElementById('p-result').style.display='none';document.getElementById('p-game').style.display='flex';pUpdate();pShow();}
 
 document.addEventListener('DOMContentLoaded',()=>{wInit();pInit();});
 </script>
