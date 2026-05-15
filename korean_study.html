@@ -314,12 +314,24 @@ const ALL_WORDS = [
   {k:'사냥',r:'サニャン',m:'狩り',cat:'streaming',emotion:'streaming'},
   {k:'몬스터',r:'モンスター',m:'モンスター',cat:'streaming',emotion:'streaming'},
   {k:'최적화',r:'チェジョクファ',m:'最適化',cat:'streaming',emotion:'streaming'},
+  {k:'힘', r:'ヒム', m:'力', cat:'emotion', emotion:'positive'},
+{k:'위로', r:'ウィロ', m:'慰め', cat:'emotion', emotion:'positive'},
+{k:'감사함', r:'カムサハム', m:'感謝の気持ち', cat:'emotion', emotion:'positive'},
+{k:'느끼다', r:'ヌッキダ', m:'感じる', cat:'emotion', emotion:'chatting'},
+{k:'언어', r:'オノ', m:'言語', cat:'other', emotion:'chatting'},
+{k:'구사하다', r:'クサハダ', m:'使いこなす', cat:'verbs', emotion:'positive'},
+{k:'항상', r:'ハンサン', m:'いつも', cat:'connectors', emotion:'chatting'},
 ];
 
 // ══════════════════════
 // ★フレーズここに追加★
 // ══════════════════════
 const ALL_PHRASES = [
+  {k:'정말 정말 큰 힘과 위로', r:'チョンマル チョンマル クン ヒムグァ ウィロ', m:'本当に大きな力と慰め', scene:'感謝・感動', emotion:'positive', freq:'💡'},
+{k:'감사함을 느끼고 있습니다', r:'カムサハムル ヌッキゴ イッスムニダ', m:'感謝を感じています', scene:'感謝を伝える時', emotion:'positive', freq:'👍'},
+{k:'일본어 마스터가 돼서', r:'イルボノ マストガ デソ', m:'日本語マスターになって', scene:'語学目標・海外交流', emotion:'chatting', freq:'💡'},
+{k:'두 가지 언어를 구사하고 싶다', r:'トゥ ガジ オノルル クサハゴ シプタ', m:'2つの言語を使いこなしたい', scene:'語学・国際配信', emotion:'positive', freq:'💡'},
+{k:'항상 정말 감사합니다', r:'ハンサン チョンマル カムサハムニダ', m:'いつも本当にありがとうございます', scene:'配信締め・感謝', emotion:'positive', freq:'🔥'},
   {k:'먹고 살아야지',r:'モッコ サラヤジ',m:'食っていかなきゃね',scene:'雑談・運営ネタ',emotion:'chatting',freq:'🔥'},
   {k:'더 열심히 작업합니다',r:'ト ヨルシミ チャゴッカムニダ',m:'もっと頑張って作業します',scene:'制作・VTuber準備',emotion:'streaming',freq:'👍'},
   {k:'많이 자주 들어와 주세요',r:'マニ チャジュ トゥロワ ジュセヨ',m:'たくさん遊びに来てください',scene:'配信締め・宣伝',emotion:'streaming',freq:'🔥'},
