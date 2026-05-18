@@ -219,6 +219,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 // ★単語ここに追加★
 // ══════════════════════
 const ALL_WORDS = [
+  {k:'심장', r:'シムジャン', m:'心臓', cat:'emotion', emotion:'reaction'},
+{k:'터지다', r:'トジダ', m:'破裂する', cat:'slang', emotion:'reaction'},
+{k:'만들다', r:'マンドゥルダ', m:'作る・させる', cat:'verbs', emotion:'chatting'},
   {k:'먹고 살다',r:'モッコ サルダ',m:'食べて生きる・食っていく',cat:'verbs',emotion:'chatting'},
   {k:'작업하다',r:'チャゴパダ',m:'作業する・制作する',cat:'streaming',emotion:'streaming'},
   {k:'들어오다',r:'トゥロオダ',m:'入ってくる・配信に来る',cat:'streaming',emotion:'chatting'},
@@ -327,6 +330,11 @@ const ALL_WORDS = [
 // ★フレーズここに追加★
 // ══════════════════════
 const ALL_PHRASES = [
+  {k:'심장 터지게 만들어 줄게', r:'シムジャン トジゲ マンドゥロ ジュッケ', m:'心臓バクバクにしてあげる', scene:'煽り・ホラー・演出', emotion:'reaction', freq:'💡'},
+  {k:'일찍 키우려고 그랬는데', r:'イルッチッ キウリョゴ グレンヌンデ', m:'早めに進めようとしてたんだけど', scene:'予定・作業進行', emotion:'chatting', freq:'👍'},
+{k:'작가님이랑 함께', r:'チャッカニミラン ハムッケ', m:'作家さんと一緒に', scene:'制作・VTuber準備', emotion:'streaming', freq:'💡'},
+{k:'불타는 주말 보내다가', r:'プルタヌン チュマル ポネダガ', m:'盛り上がる週末を過ごしてて', scene:'週末雑談', emotion:'positive', freq:'👍'},
+{k:'조금 늦었다', r:'チョグム ヌジョッタ', m:'少し遅れた', scene:'進捗・予定', emotion:'chatting', freq:'🔥'},
   {k:'정말 정말 큰 힘과 위로', r:'チョンマル チョンマル クン ヒムグァ ウィロ', m:'本当に大きな力と慰め', scene:'感謝・感動', emotion:'positive', freq:'💡'},
 {k:'감사함을 느끼고 있습니다', r:'カムサハムル ヌッキゴ イッスムニダ', m:'感謝を感じています', scene:'感謝を伝える時', emotion:'positive', freq:'👍'},
 {k:'일본어 마스터가 돼서', r:'イルボノ マストガ デソ', m:'日本語マスターになって', scene:'語学目標・海外交流', emotion:'chatting', freq:'💡'},
