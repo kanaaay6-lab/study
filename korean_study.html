@@ -361,30 +361,34 @@ let pDeck=[],pIdx=0,pO=0,pX=0,pCat='all',pFlipped=false;
 function curP(){return pDeck[pIdx]||{k:'',r:'',m:'',scene:'',emotion:'chatting',freq:''};}
 function pInit(){buildFilters('phrase-filters',e=>{pCat=e;pRestart();});pRestart();}
 function pRestart(){pO=0;pX=0;pIdx=0;pFlipped=false;pWrong=[];pDeck=shuf(pCat==='all'?ALL_PHRASES:ALL_PHRASES.filter(p=>p.emotion===pCat));document.getElementById('p-result').style.display='none';document.getElementById('p-game').style.display='flex';document.getElementById('p-inner').style.height='';pUpdate();pShow();}
-function pShow(){pFlipped=false;const p=curP();document.getElementById('p-kr').textContent=p.k;document.getElementById('p-m').textContent=p.m;document.
-  
+function pShow(){
+  pFlipped = false;
+  const p = curP();
+
+  document.getElementById('p-kr').textContent = p.k;
+  document.getElementById('p-m').textContent = p.m;
   document.getElementById('p-r').textContent = p.r;
-document.getElementById('p-scene').textContent = p.scene;
+  document.getElementById('p-scene').textContent = p.scene;
 
-if (p.breakdown) 
-  document.getElementById('p-breakdown-wrap').style.display = 'flex';
-  document.getElementById('p-breakdown').textContent = p.breakdown;
-} else {
-  document.getElementById('p-breakdown-wrap').style.display = 'none';
+  if (p.breakdown) {
+    document.getElementById('p-breakdown-wrap').style.display = 'flex';
+    document.getElementById('p-breakdown').textContent = p.breakdown;
+  } else {
+    document.getElementById('p-breakdown-wrap').style.display = 'none';
+  }
+
+  document.getElementById('p-freq').textContent = p.freq;
+
+  const et = document.getElementById('p-etag');
+  et.innerHTML = '';
+  et.appendChild(eTag(p.emotion));
+
+  const inner = document.getElementById('p-inner');
+  inner.classList.remove('on');
+  inner.style.height = '';
+
+  document.getElementById('p-flip-btn').style.display = 'block';
+  document.getElementById('p-judge').style.display = 'none';
+
+  setTimeout(() => spk(p.k), 350);
 }
-
-document.getElementById('p-freq').textContent = p.freq;p.scene;
-}              
-                 
-                 
-                 document.getElementById('p-freq').textContent=p.freq;const et=document.getElementById('p-etag');et.innerHTML='';et.appendChild(eTag(p.emotion));const inner=document.getElementById('p-inner');inner.classList.remove('on');inner.style.height='';document.getElementById('p-flip-btn').style.display='block';document.getElementById('p-judge').style.display='none';setTimeout(()=>spk(p.k),350);}
-function pFlip(){if(pFlipped)return;pFlipped=true;const inner=document.getElementById('p-inner');const front=inner.querySelector('.flip-front');const back=inner.querySelector('.flip-back');const h=Math.max(front.scrollHeight,back.scrollHeight,160);inner.style.height=h+'px';inner.classList.add('on');document.getElementById('p-flip-btn').style.display='none';document.getElementById('p-judge').style.display='flex';}
-function pJudge(ok){if(!ok)pWrong.push(curP());if(ok)pO++;else pX++;pIdx++;pUpdate();if(pIdx>=pDeck.length)pResult();else pShow();}
-function pUpdate(){document.getElementById('p-o').textContent=pO;document.getElementById('p-x').textContent=pX;document.getElementById('p-left').textContent=Math.max(0,pDeck.length-pIdx);document.getElementById('p-prog').style.width=(pDeck.length>0?(pIdx/pDeck.length*100):0)+'%';}
-function pResult(){document.getElementById('p-game').style.display='none';document.getElementById('p-result').style.display='block';const{icon,msg}=calcRes(pO,pDeck.length);document.getElementById('p-emoji').textContent=icon;document.getElementById('p-score').textContent=pO+' / '+pDeck.length;document.getElementById('p-msg').textContent=msg;document.getElementById('p-wn').textContent=pWrong.length>0?'❌ 間違えたフレーズ：'+pWrong.length+'個':'';document.getElementById('p-retry').style.display=pWrong.length>0?'block':'none';}
-function pRetryWrong(){const retry=shuf([...pWrong]);pWrong=[];pO=0;pX=0;pIdx=0;pFlipped=false;pDeck=retry;document.getElementById('p-result').style.display='none';document.getElementById('p-game').style.display='flex';pUpdate();pShow();}
-
-document.addEventListener('DOMContentLoaded',()=>{wInit();pInit();});
-</script>
-</body>
-</html>
