@@ -392,3 +392,92 @@ function pShow(){
 
   setTimeout(() => spk(p.k), 350);
 }
+
+  function pFlip(){
+  if(pFlipped) return;
+
+  pFlipped = true;
+
+  const inner = document.getElementById('p-inner');
+  const front = inner.querySelector('.flip-front');
+  const back = inner.querySelector('.flip-back');
+
+  const h = Math.max(front.scrollHeight, back.scrollHeight, 160);
+
+  inner.style.height = h + 'px';
+  inner.classList.add('on');
+
+  document.getElementById('p-flip-btn').style.display = 'none';
+  document.getElementById('p-judge').style.display = 'flex';
+}
+
+function pJudge(ok){
+  if(!ok) pWrong.push(curP());
+
+  if(ok) pO++;
+  else pX++;
+
+  pIdx++;
+
+  pUpdate();
+
+  if(pIdx >= pDeck.length){
+    pResult();
+  }else{
+    pShow();
+  }
+}
+
+function pUpdate(){
+  document.getElementById('p-o').textContent = pO;
+  document.getElementById('p-x').textContent = pX;
+  document.getElementById('p-left').textContent = Math.max(0, pDeck.length - pIdx);
+
+  document.getElementById('p-prog').style.width =
+    (pDeck.length > 0 ? (pIdx / pDeck.length * 100) : 0) + '%';
+}
+
+function pResult(){
+  document.getElementById('p-game').style.display = 'none';
+  document.getElementById('p-result').style.display = 'block';
+
+  const {icon, msg} = calcRes(pO, pDeck.length);
+
+  document.getElementById('p-emoji').textContent = icon;
+  document.getElementById('p-score').textContent = pO + ' / ' + pDeck.length;
+  document.getElementById('p-msg').textContent = msg;
+
+  document.getElementById('p-wn').textContent =
+    pWrong.length > 0
+      ? '❌ 間違えたフレーズ：' + pWrong.length + '個'
+      : '';
+
+  document.getElementById('p-retry').style.display =
+    pWrong.length > 0 ? 'block' : 'none';
+}
+
+function pRetryWrong(){
+  const retry = shuf([...pWrong]);
+
+  pWrong = [];
+  pO = 0;
+  pX = 0;
+  pIdx = 0;
+  pFlipped = false;
+  pDeck = retry;
+
+  document.getElementById('p-result').style.display = 'none';
+  document.getElementById('p-game').style.display = 'flex';
+
+  pUpdate();
+  pShow();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  wInit();
+  pInit();
+});
+</script>
+</body>
+</html>
+  
