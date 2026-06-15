@@ -361,11 +361,19 @@ let pDeck=[],pIdx=0,pO=0,pX=0,pCat='all',pFlipped=false;
 function curP(){return pDeck[pIdx]||{k:'',r:'',m:'',scene:'',emotion:'chatting',freq:''};}
 function pInit(){buildFilters('phrase-filters',e=>{pCat=e;pRestart();});pRestart();}
 function pRestart(){pO=0;pX=0;pIdx=0;pFlipped=false;pWrong=[];pDeck=shuf(pCat==='all'?ALL_PHRASES:ALL_PHRASES.filter(p=>p.emotion===pCat));document.getElementById('p-result').style.display='none';document.getElementById('p-game').style.display='flex';document.getElementById('p-inner').style.height='';pUpdate();pShow();}
-function pShow(){pFlipped=false;const p=curP();document.getElementById('p-kr').textContent=p.k;document.getElementById('p-m').textContent=p.m;document.getElementById('p-r').textContent=p.r;document.getElementById('p-scene').textContent=if(p.breakdown){
-  document.getElementById('p-breakdown-wrap').style.display='flex';
-  document.getElementById('p-breakdown').textContent=p.breakdown;
-}else{
-  document.getElementById('p-breakdown-wrap').style.display='none';
+function pShow(){pFlipped=false;const p=curP();document.getElementById('p-kr').textContent=p.k;document.getElementById('p-m').textContent=p.m;document.
+  
+  document.getElementById('p-r').textContent = p.r;
+document.getElementById('p-scene').textContent = p.scene;
+
+if (p.breakdown) 
+  document.getElementById('p-breakdown-wrap').style.display = 'flex';
+  document.getElementById('p-breakdown').textContent = p.breakdown;
+} else {
+  document.getElementById('p-breakdown-wrap').style.display = 'none';
+}
+
+document.getElementById('p-freq').textContent = p.freq;p.scene;
 }              
                  
                  
