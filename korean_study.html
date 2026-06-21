@@ -289,6 +289,13 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 // ★単語ここに追加★
 // ══════════════════════
 const ALL_WORDS = [
+  {k:'인정', r:'インジョン', m:'認める・ナイス', cat:'reaction', emotion:'reaction'},
+{k:'시참', r:'シチャム', m:'視聴者参加', cat:'streaming', emotion:'streaming'},
+{k:'탐색', r:'タムセク', m:'探索', cat:'streaming', emotion:'streaming'},
+{k:'도발', r:'トバル', m:'挑発', cat:'streaming', emotion:'reaction'},
+{k:'버그', r:'ボグ', m:'バグ', cat:'streaming', emotion:'streaming'},
+{k:'패치', r:'ペチ', m:'アップデート・修正', cat:'streaming', emotion:'streaming'},
+{k:'설정', r:'ソルジョン', m:'設定', cat:'streaming', emotion:'streaming'},
   {k:'이번 주', r:'イボン ジュ', m:'今週', cat:'time', emotion:'chatting'},
 {k:'다음 주', r:'タウム ジュ', m:'来週', cat:'time', emotion:'chatting'},
 {k:'주말', r:'チュマル', m:'週末', cat:'time', emotion:'chatting'},
@@ -347,6 +354,15 @@ const ALL_WORDS = [
 // ★フレーズここに追加★
 // ══════════════════════
 const ALL_PHRASES = [
+  {k:'한번 먹어 볼까?',r:'ハンボン モゴボルカ',m:'一回食べてみようか',scene:'食事・雑談',emotion:'chatting',freq:'👍',breakdown:'한번=一度 / 먹어 볼까=食べてみようか'},
+{k:'좋아. 시작해 볼까?',r:'チョア シジャケボルカ',m:'よし、始めようか',scene:'ゲーム開始',emotion:'streaming',freq:'🔥',breakdown:'좋아=よし / 시작해 볼까=始めてみようか'},
+{k:'어디 숨었지?',r:'オディ スモッチ',m:'どこに隠れた？',scene:'かくれんぼ',emotion:'streaming',freq:'🔥',breakdown:'어디=どこ / 숨었지=隠れたかな'},
+{k:'안 봐준다.',r:'アン バジュンダ',m:'もう手加減しない',scene:'ゲーム',emotion:'reaction',freq:'🔥',breakdown:'안=〜しない / 봐준다=見逃す・手加減する'},
+{k:'오케이 인정.',r:'オケイ インジョン',m:'OK、認める',scene:'ゲーム結果',emotion:'reaction',freq:'🔥',breakdown:'오케이=OK / 인정=認める'},
+{k:'내가 졌다.',r:'ネガ チョッタ',m:'負けた',scene:'ゲーム終了',emotion:'reaction',freq:'👍',breakdown:'내가=私が / 졌다=負けた'},
+{k:'고생하셨습니다.',r:'コセンハショッスムニダ',m:'お疲れさまでした',scene:'締め',emotion:'positive',freq:'🔥',breakdown:'고생=苦労 / 하셨습니다=されました'},
+{k:'함께 해 주셔서 감사합니다.',r:'ハムッケ ヘ ジュショソ カムサハムニダ',m:'一緒に遊んでくださってありがとうございます',scene:'配信終了',emotion:'positive',freq:'🔥',breakdown:'함께=一緒に / 해 주셔서=してくださって / 감사합니다=ありがとうございます'},
+{k:'재밌었어요.',r:'チェミッソッソヨ',m:'楽しかったです',scene:'感想',emotion:'positive',freq:'🔥',breakdown:'재밌었어요=楽しかったです'},
   {k:'확인해 볼게요',r:'ファギネボルケヨ',m:'確認してみます',scene:'確認・状況把握',emotion:'chatting',freq:'🔥',breakdown:'확인해=確認して/볼게요=〜してみます'},
 {k:'설명해 드릴게요',r:'ソルミョンヘドゥリルケヨ',m:'説明します',scene:'説明・雑談',emotion:'chatting',freq:'🔥',breakdown:'설명해=説明して/드릴게요=して差し上げます'},
 {k:'잠깐 갔다 올게요',r:'チャムカンカッタオルケヨ',m:'ちょっと行ってきます',scene:'離席・休憩',emotion:'chatting',freq:'👍',breakdown:'잠깐=ちょっと/갔다 올게요=行って戻ってきます'},
@@ -407,6 +423,14 @@ const ALL_PHRASES = [
 // ★文型ここに追加★
 // ══════════════════════
 const ALL_PATTERNS = [
+  {k:'~(으)니까', r:'ウニッカ', m:'〜だから・〜ので', type:'연결', formality:'둘다', breakdown:'動詞・形容詞語幹 + (으)니까', example:'맛있으니까 계속 먹어요.（おいしいから食べ続けます）'},
+{k:'~잖아', r:'ジャナ', m:'〜じゃん・〜でしょ', type:'종결', formality:'반말', breakdown:'語幹 + 잖아', example:'그렇잖아.（そうじゃん）'},
+{k:'~려고', r:'リョゴ', m:'〜しようとして', type:'연결', formality:'둘다', breakdown:'動詞語幹 + 려고', example:'먹으려고 했어요.（食べようとしました）'},
+{k:'~(으)면', r:'ウミョン', m:'〜すれば・〜なら', type:'연결', formality:'둘다', breakdown:'動詞・形容詞語幹 + (으)면', example:'먹으면 행복해요.（食べれば幸せです）'},
+{k:'~아/어 버리다', r:'ボリダ', m:'〜してしまう', type:'종결', formality:'둘다', breakdown:'動詞語幹 + 아/어 버리다', example:'슬라임이 돼 버렸어.（スライムになってしまった）'},
+{k:'~고 있다', r:'ゴ イッタ', m:'〜している', type:'종결', formality:'둘다', breakdown:'動詞語幹 + 고 있다', example:'사용하고 있어요.（使っています）'},
+{k:'~는데', r:'ヌンデ', m:'〜だけど・〜のに', type:'연결', formality:'둘다', breakdown:'語幹 + 는데', example:'건강이 안 좋은데.（体調が良くないんだけど）'},
+{k:'~지만', r:'ジマン', m:'〜だけど', type:'연결', formality:'둘다', breakdown:'語幹 + 지만', example:'술방은 못 하지만.（酒配信はできないけど）'},
 {k:'~(으)ㄹ게요', r:'ルゲヨ', m:'〜します（意志）', type:'종결', formality:'존댓말', breakdown:'動詞語幹 + ㄹ게요', example:'확인해 볼게요 (確認してみます)'},
 {k:'~아/어요', r:'アヨ／オヨ', m:'基本の丁寧形', type:'종결', formality:'존댓말', breakdown:'動詞・形容詞語幹 + 아/어요', example:'내일 봐요 (また明日)'},
 {k:'~았/었어(요)', r:'アッソ(ヨ)', m:'過去形', type:'종결', formality:'반말/존댓말', breakdown:'語幹 + 았/었 + 어(요)', example:'어디 갔어? (どこ行った?)'},
