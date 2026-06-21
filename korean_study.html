@@ -19,7 +19,7 @@
 body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;max-width:480px;margin:0 auto;padding-bottom:60px;}
 .nav{width:100%;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px 10px;position:sticky;top:0;z-index:100;}
 .nav-title{text-align:center;font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--pl);letter-spacing:0.1em;margin-bottom:10px;}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;}
 .tab{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:8px 2px;border-radius:8px;font-size:0.68rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;text-align:center;line-height:1.3;transition:all 0.2s;}
 .tab.active{background:var(--purple);border-color:var(--purple);color:#fff;font-weight:700;}
 .screen{display:none;width:100%;padding:14px 16px;flex-direction:column;align-items:center;gap:10px;}
@@ -63,6 +63,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 .et-reaction{background:rgba(255,217,61,0.12);border:1px solid var(--yellow);color:var(--yellow);}
 .et-chatting{background:var(--pdim);border:1px solid var(--pl);color:var(--pl);}
 .et-streaming{background:rgba(96,165,250,0.12);border:1px solid #60a5fa;color:#60a5fa;}
+.et-jongkyul{background:rgba(34,211,238,0.12);border:1px solid #22d3ee;color:#22d3ee;}
+.et-yeongyeol{background:rgba(251,146,60,0.12);border:1px solid #fb923c;color:#fb923c;}
 .btn{width:100%;border:none;padding:12px;border-radius:10px;font-size:0.85rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:700;transition:all 0.15s;}
 .btn:active{transform:scale(0.98);}
 .btn-p{background:linear-gradient(135deg,var(--purple),var(--pl));color:#fff;box-shadow:0 4px 14px var(--pglow);}
@@ -91,6 +93,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
   <div class="tabs">
     <button class="tab active" onclick="switchMode('word',this)">🃏<br>単語</button>
     <button class="tab" onclick="switchMode('phrase',this)">💬<br>フレーズ</button>
+    <button class="tab" onclick="switchMode('pattern',this)">🧩<br>文型</button>
     <button class="tab" onclick="switchMode('howto',this)">➕<br>追加方法</button>
   </div>
 </div>
@@ -198,6 +201,62 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
   </div>
 </div>
 
+<div class="screen" id="screen-pattern">
+  <div class="filter-wrap" id="pattern-filters"></div>
+  <div class="scores">
+    <span class="so">⭕ <span id="g-o">0</span></span>
+    <span class="sx">❌ <span id="g-x">0</span></span>
+    <span class="sl">残り <span id="g-left">0</span></span>
+  </div>
+  <div class="prog"><div class="prog-bar" id="g-prog" style="width:0%"></div></div>
+  <div id="g-game" class="phrase-flip" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div class="flip-wrap" onclick="gFlip()">
+      <div class="flip-inner" id="g-inner">
+        <div class="flip-face flip-front">
+          <span class="flip-label">タップでめくる</span>
+          <div class="phrase-kr" id="g-kr">—</div>
+          <button class="speak-btn" onclick="event.stopPropagation();spk(curG().k)">🔊 発音を聞く</button>
+        </div>
+        <div class="flip-face flip-back">
+          <div class="phrase-back">
+            <div class="phrase-row">
+              <span class="phrase-row-label">意味</span>
+              <span class="phrase-meaning-big" id="g-m">—</span>
+            </div>
+            <div class="phrase-row">
+              <span class="phrase-row-label">分解</span>
+              <span class="phrase-row-val" id="g-breakdown">—</span>
+            </div>
+            <div class="phrase-row">
+              <span class="phrase-row-label">例文</span>
+              <span class="phrase-row-val" id="g-example">—</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <div id="g-etag"></div>
+              <span class="phrase-freq" id="g-formality">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-p" id="g-flip-btn" onclick="gFlip()">答えを見る 👀</button>
+    <div class="row2" id="g-judge" style="display:none">
+      <button class="btn btn-r" onclick="gJudge(false)">❌ わからなかった</button>
+      <button class="btn btn-g" onclick="gJudge(true)">⭕ わかった！</button>
+    </div>
+  </div>
+  <div id="g-result" style="display:none;width:100%">
+    <div class="result-wrap">
+      <div class="result-icon" id="g-emoji">🐦‍⬛</div>
+      <div class="result-score" id="g-score"></div>
+      <div class="result-msg" id="g-msg"></div>
+      <div class="result-wrong" id="g-wn"></div>
+      <button class="btn btn-s" style="margin-top:6px" onclick="gRestart()">もう一度 🔄</button>
+      <button class="btn btn-r" id="g-retry" style="display:none" onclick="gRetryWrong()">❌ 間違えた文型だけもう一度</button>
+    </div>
+  </div>
+</div>
+
 <div class="screen" id="screen-howto">
   <div class="section-title">単語の追加方法</div>
   <div class="howto">
@@ -215,7 +274,13 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-seri
 
     <strong>⑤ フレーズは「★フレーズここに追加★」の下にペースト</strong>
 
-    <strong>⑥ Commit して再読み込み → 完了！</strong>
+    <strong>⑥ 文型はこの形式</strong>
+    <code>{k:'~ㄹ게요', r:'ルゲヨ', m:'〜します（意志）', type:'종결', formality:'존댓말', breakdown:'動詞語幹+ㄹ게요', example:'확인해 볼게요 (確認してみます)'},</code>
+    type：종결（文を終える語尾） / 연결（文をつなぐ語尾）／formality：존댓말・반말・둘다
+
+    <strong>⑦ 文型は「★文型ここに追加★」の下にペースト</strong>
+
+    <strong>⑧ Commit して再読み込み → 完了！</strong>
   </div>
 </div>
 
@@ -338,16 +403,42 @@ const ALL_PHRASES = [
 {k:'작가님 감사합니다',r:'チャッカニム カムサハムニダ',m:'作家さんありがとうございます',scene:'制作感謝',emotion:'positive',freq:'👍',breakdown:'작가님=作家さん / 감사합니다=ありがとうございます'},
 ];
 
+// ══════════════════════
+// ★文型ここに追加★
+// ══════════════════════
+const ALL_PATTERNS = [
+{k:'~(으)ㄹ게요', r:'ルゲヨ', m:'〜します（意志）', type:'종결', formality:'존댓말', breakdown:'動詞語幹 + ㄹ게요', example:'확인해 볼게요 (確認してみます)'},
+{k:'~아/어요', r:'アヨ／オヨ', m:'基本の丁寧形', type:'종결', formality:'존댓말', breakdown:'動詞・形容詞語幹 + 아/어요', example:'내일 봐요 (また明日)'},
+{k:'~았/었어(요)', r:'アッソ(ヨ)', m:'過去形', type:'종결', formality:'반말/존댓말', breakdown:'語幹 + 았/었 + 어(요)', example:'어디 갔어? (どこ行った?)'},
+{k:'~(으)ㄹ까(요)?', r:'ルカ(ヨ)', m:'〜しようか・かな', type:'종결', formality:'반말/존댓말', breakdown:'語幹 + (으)ㄹ까(요)', example:'뭐가 좋을까? (何がいいかな?)'},
+{k:'~것 같아요', r:'コッ カタヨ', m:'〜のようだ・〜と思う', type:'종결', formality:'존댓말', breakdown:'語幹 + 것 같다/같아요', example:'~할 것 같아요 (〜しそうです)'},
+{k:'~게 되다', r:'ゲ デダ', m:'〜することになる', type:'연결', formality:'둘다', breakdown:'語幹 + 게 + 되다', example:'못 하게 됐지 (できなくなったよね)'},
+{k:'~아/어야 되다/하다', r:'アヤ デダ', m:'〜しなければならない', type:'연결', formality:'둘다', breakdown:'語幹 + 아/어야 + 되다/하다', example:'어차피 해야 돼 (どうせやらないと)'},
+{k:'~아/어 보다', r:'ア／オ ボダ', m:'〜してみる', type:'연결', formality:'둘다', breakdown:'語幹 + 아/어 + 보다', example:'생각해 보니까 (考えてみたら)'},
+{k:'~아/어 주다', r:'ア／オ ジュダ', m:'〜してくれる', type:'연결', formality:'둘다', breakdown:'語幹 + 아/어 + 주다（敬語は주시다）', example:'응원해 주셔서 감사합니다 (応援してくれてありがとう)'},
+{k:'~(으)시-', r:'シ', m:'尊敬の語幹', type:'연결', formality:'존댓말', breakdown:'語幹 + (으)시 + 語尾', example:'도와주시는 분 (手伝ってくださる方)'},
+{k:'~더라', r:'トラ', m:'〜だったなぁ（回想）', type:'종결', formality:'반말', breakdown:'語幹 + 더라', example:'보람이 되더라 (報われる感じだった)'},
+{k:'~겠-', r:'ゲッ', m:'〜しそう・〜だろう（推量）', type:'종결', formality:'둘다', breakdown:'語幹 + 겠 + 語尾', example:'미치겠다 진짜 (マジでやばい)'},
+{k:'~자', r:'ジャ', m:'〜しよう（勧誘・タメ口）', type:'종결', formality:'반말', breakdown:'動詞語幹 + 자', example:'일단 해보자 (とりあえずやってみよう)'},
+{k:'~네(요)', r:'ネ(ヨ)', m:'〜だね（気づき）', type:'종결', formality:'둘다', breakdown:'語幹 + 네(요)', example:'큰일 났네 (大変だ)'},
+{k:'~도록', r:'トロク', m:'〜するように', type:'연결', formality:'둘다', breakdown:'動詞語幹 + 도록', example:'키도록 하겠습니다 (つけるようにします)'},
+];
+
 const EMOTIONS=['all','positive','negative','reaction','chatting','streaming'];
 const E_JP={all:'全部',positive:'✨ positive',negative:'😤 negative',reaction:'😲 reaction',chatting:'💬 chatting',streaming:'🎮 streaming'};
 const E_CLASS={positive:'et-positive',negative:'et-negative',reaction:'et-reaction',chatting:'et-chatting',streaming:'et-streaming'};
-let wWrong=[],pWrong=[];
+const TYPES=['all','종결','연결'];
+const T_JP={all:'全部',종결:'🔚 종결',연결:'🔗 연결'};
+const T_CLASS={종결:'et-jongkyul',연결:'et-yeongyeol'};
+let wWrong=[],pWrong=[],gWrong=[];
 
 function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
 function spk(t){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=0.85;window.speechSynthesis.speak(u);}
 function calcRes(o,total){const p=Math.round((o/total)*100);let icon='😢',msg='まだまだこれから！毎日少し聞こう 🎧';if(p>=90){icon='🔥';msg='완벽해！ほぼ完璧！';}else if(p>=70){icon='🎉';msg='잘했어！いい調子！';}else if(p>=50){icon='👍';msg='절반 이상！半分以上わかった！';}return{icon,msg};}
 function eTag(e){const d=document.createElement('div');d.className='emotion-tag '+(E_CLASS[e]||'et-chatting');d.textContent=E_JP[e]||e;return d;}
+function gTag(t){const d=document.createElement('div');d.className='emotion-tag '+(T_CLASS[t]||'et-jongkyul');d.textContent=T_JP[t]||t;return d;}
 function buildFilters(id,fn){const w=document.getElementById(id);w.innerHTML='';EMOTIONS.forEach(e=>{const b=document.createElement('button');b.className='f-btn'+(e==='all'?' active':'');b.textContent=E_JP[e];b.onclick=()=>{w.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');fn(e);};w.appendChild(b);});}
+function buildPatternFilters(id,fn){const w=document.getElementById(id);w.innerHTML='';TYPES.forEach(t=>{const b=document.createElement('button');b.className='f-btn'+(t==='all'?' active':'');b.textContent=T_JP[t];b.onclick=()=>{w.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');fn(t);};w.appendChild(b);});}
 function switchMode(mode,btn){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('screen-'+mode).classList.add('active');btn.classList.add('active');}
 
 let wDeck=[],wIdx=0,wO=0,wX=0,wCat='all',wFlipped=false;
@@ -477,9 +568,118 @@ function pRetryWrong(){
   pShow();
 }
 
+let gDeck=[],gIdx=0,gO=0,gX=0,gCat='all',gFlipped=false;
+function curG(){return gDeck[gIdx]||{k:'',r:'',m:'',breakdown:'',example:'',type:'종결',formality:''};}
+function gInit(){buildPatternFilters('pattern-filters',t=>{gCat=t;gRestart();});gRestart();}
+function gRestart(){gO=0;gX=0;gIdx=0;gFlipped=false;gWrong=[];gDeck=shuf(gCat==='all'?ALL_PATTERNS:ALL_PATTERNS.filter(p=>p.type===gCat));document.getElementById('g-result').style.display='none';document.getElementById('g-game').style.display='flex';document.getElementById('g-inner').style.height='';gUpdate();gShow();}
+function gShow(){
+  gFlipped = false;
+  const g = curG();
+
+  document.getElementById('g-kr').textContent = g.k;
+  document.getElementById('g-m').textContent = g.m;
+  document.getElementById('g-breakdown').textContent = g.breakdown;
+  document.getElementById('g-example').textContent = g.example;
+  document.getElementById('g-formality').textContent = g.formality;
+
+  const et = document.getElementById('g-etag');
+  et.innerHTML = '';
+  et.appendChild(gTag(g.type));
+
+  const inner = document.getElementById('g-inner');
+  inner.classList.remove('on');
+  inner.style.height = '';
+
+  document.getElementById('g-flip-btn').style.display = 'block';
+  document.getElementById('g-judge').style.display = 'none';
+
+  setTimeout(() => spk(g.k.replace('~','')), 350);
+}
+
+function gFlip(){
+  if(gFlipped) return;
+
+  gFlipped = true;
+
+  const inner = document.getElementById('g-inner');
+  const front = inner.querySelector('.flip-front');
+  const back = inner.querySelector('.flip-back');
+
+  const h = Math.max(front.scrollHeight, back.scrollHeight, 160);
+
+  inner.style.height = h + 'px';
+  inner.classList.add('on');
+
+  document.getElementById('g-flip-btn').style.display = 'none';
+  document.getElementById('g-judge').style.display = 'flex';
+}
+
+function gJudge(ok){
+  if(!ok) gWrong.push(curG());
+
+  if(ok) gO++;
+  else gX++;
+
+  gIdx++;
+
+  gUpdate();
+
+  if(gIdx >= gDeck.length){
+    gResult();
+  }else{
+    gShow();
+  }
+}
+
+function gUpdate(){
+  document.getElementById('g-o').textContent = gO;
+  document.getElementById('g-x').textContent = gX;
+  document.getElementById('g-left').textContent = Math.max(0, gDeck.length - gIdx);
+
+  document.getElementById('g-prog').style.width =
+    (gDeck.length > 0 ? (gIdx / gDeck.length * 100) : 0) + '%';
+}
+
+function gResult(){
+  document.getElementById('g-game').style.display = 'none';
+  document.getElementById('g-result').style.display = 'block';
+
+  const {icon, msg} = calcRes(gO, gDeck.length);
+
+  document.getElementById('g-emoji').textContent = icon;
+  document.getElementById('g-score').textContent = gO + ' / ' + gDeck.length;
+  document.getElementById('g-msg').textContent = msg;
+
+  document.getElementById('g-wn').textContent =
+    gWrong.length > 0
+      ? '❌ 間違えた文型：' + gWrong.length + '個'
+      : '';
+
+  document.getElementById('g-retry').style.display =
+    gWrong.length > 0 ? 'block' : 'none';
+}
+
+function gRetryWrong(){
+  const retry = shuf([...gWrong]);
+
+  gWrong = [];
+  gO = 0;
+  gX = 0;
+  gIdx = 0;
+  gFlipped = false;
+  gDeck = retry;
+
+  document.getElementById('g-result').style.display = 'none';
+  document.getElementById('g-game').style.display = 'flex';
+
+  gUpdate();
+  gShow();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   wInit();
   pInit();
+  gInit();
 });
 </script>
 </body>
